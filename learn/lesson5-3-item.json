@@ -1,7 +1,7 @@
 {
-  "holdingsRecordId": "FILL_ME: the id returned when you created the holding",
+  "holdingsRecordId": "d4e792eb-8e72-4b6a-a3e9-381b73868c43",
   "barcode": "SHAMS-0001",
   "status": { "name": "Available" },
-  "materialTypeId": "FILL_ME: the 'book' material type",
-  "permanentLoanTypeId": "FILL_ME: the 'Can circulate' loan type"
+  "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+  "permanentLoanTypeId": "2b94c631-fca9-4892-a730-03ee529ffe27"
 }

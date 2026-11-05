@@ -76,18 +76,18 @@ what it can do, and whether/how it can integrate with **Drupal**.
 - [x] Practice: open loans query (worked)
 - [x] Lesson 4 — Check out → renew → check in via API
 - [x] Lesson 4 exercise — full loan cycle done myself (item `90000`, patron `789`)
-- [~] Lesson 5 — Create records. Claude created instance "Learning FOLIO by Doing"
-  (id `5de19cec-3d14-47c3-8d77-034317fb088a`, hrid `in00000000001`) on the demo.
-  **My exercise:** fill `learn/lesson5-2-holding.json` → POST `/holdings-storage/holdings`,
-  then `learn/lesson5-3-item.json` → POST `/item-storage/items`, then check out `SHAMS-0001`.
-  (Demo server resets — recreate the instance if it's gone.)
+- [x] Lesson 5 — Create records via API, all done myself on the demo:
+  instance `5de19cec-3d14-47c3-8d77-034317fb088a` ("Learning FOLIO by Doing") →
+  holding `d4e792eb-8e72-4b6a-a3e9-381b73868c43` (Main Library, source FOLIO) →
+  item `SHAMS-0001` (`3f6015f4-d253-4077-9f22-ec6612f171d5`) → checked out to patron `789`.
+  (Demo resets: recreate with `./folio.sh POST /instance-storage/instances "$(cat lesson5-1-instance.json)"`,
+  and the new instance gets a new id.)
 
 ### In progress
 - [ ] Local FOLIO: `deployApplication --cleanup` running (after host.docker.internal fix)
 - [ ] Practice exercises: user by barcode, search by author
 
 ### Up next
-- [ ] Lesson 5 — Create records via API (instance → holding → item)
 - [ ] Lesson 6 — Requests/holds & renewals (basis for a "My Account" page)
 - [ ] Verify local install works; point `folio.sh` at it
 - [ ] Settings & configuration tour (locations, loan policies, patron groups, permissions/roles)
@@ -110,4 +110,11 @@ what it can do, and whether/how it can integrate with **Drupal**.
   eureka-cli looks for `host.docker.internal` on the Mac, else falls back to Linux-only `172.17.0.1`.
   Fix: `127.0.0.1 host.docker.internal` in `/etc/hosts` (Rancher Desktop adds this automatically).
   After a failed deploy, re-run with `eureka-cli deployApplication --cleanup`.
+- **Holdings `sourceId`:** use **FOLIO** for API-made records, not MARC. The API accepts any valid
+  source id without complaint, but MARC-source holdings expect a MARC record behind them.
+- **HTTP 504** = gateway timed out waiting for the module, so the result is unknown. Always GET to check
+  whether the record was created before retrying, to avoid duplicates.
+- **DELETE** returns `204` (no body) on success; a holding can only be deleted when it has no items.
+- FOLIO allows duplicate instance titles, so re-POSTing an instance creates a second copy.
+- Lookup tip: `./folio.sh GET /loan-types | grep -E '"(id|name)"'`, then take the id **above** the name.
 - Apple Silicon: some FOLIO images may be amd64-only → rely on Rosetta emulation; watch for failures.

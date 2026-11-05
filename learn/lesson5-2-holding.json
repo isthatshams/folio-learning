@@ -1,6 +1,6 @@
 {
-  "instanceId": "FILL_ME: the id of the instance you just created",
-  "permanentLocationId": "FILL_ME: pick a location (e.g. Main Library)",
-  "sourceId": "FILL_ME: the FOLIO holdings source",
+  "instanceId": "5de19cec-3d14-47c3-8d77-034317fb088a",
+  "permanentLocationId": "fcd64ce1-6995-48f0-840e-89ffa2288371",
+  "sourceId": "f32d531e-df79-46b3-8932-cdd35f7a2264",
   "callNumber": "Z678.9 .L43 2026"
 }
