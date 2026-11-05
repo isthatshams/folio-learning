@@ -84,11 +84,16 @@ what it can do, and whether/how it can integrate with **Drupal**.
   and the new instance gets a new id.)
 
 ### In progress
-- [ ] Local FOLIO: `deployApplication --cleanup` running (after host.docker.internal fix)
+- [~] Lesson 6 — Requests/holds: patron `456` placed a Hold on `SHAMS-0001` while 789 had it
+  (request `6775bf77-9f47-49fa-a98e-bb09e40b4571`, body in `lesson6-1-request.json`).
+  Check-in → loan Closed, item **Awaiting pickup**, request **Open - Awaiting pickup**,
+  hold shelf expires in 3 weeks. Checked out to 456 (`checkout-456.json`) → item Checked out,
+  request **Closed - Filled** (drops out of the queue, no position). Next: try a Recall.
+- [ ] Local FOLIO: first deploy failed at tenant entitlements (5-min CLI timeout) → patched to 45 min,
+  redeploy with `--cleanup` next
 - [ ] Practice exercises: user by barcode, search by author
 
 ### Up next
-- [ ] Lesson 6 — Requests/holds & renewals (basis for a "My Account" page)
 - [ ] Verify local install works; point `folio.sh` at it
 - [ ] Settings & configuration tour (locations, loan policies, patron groups, permissions/roles)
 - [ ] Data import: loading MARC records
@@ -110,6 +115,12 @@ what it can do, and whether/how it can integrate with **Drupal**.
   eureka-cli looks for `host.docker.internal` on the Mac, else falls back to Linux-only `172.17.0.1`.
   Fix: `127.0.0.1 host.docker.internal` in `/etc/hosts` (Rancher Desktop adds this automatically).
   After a failed deploy, re-run with `eureka-cli deployApplication --cleanup`.
+- **Deploy timed out at "CREATING TENANT ENTITLEMENTS"** (`timeout awaiting response headers`):
+  installing modules + sample data takes >5 min on M1/Rosetta, but eureka-cli waits only 5 min.
+  Fix (local patch): `eureka-cli/constant/constant.go` → `HTTPClientTimeout` and
+  `HTTPClientResponseHeaderTimeout` = `45 * time.Minute`, then `go install .` in `eureka-cli/`.
+  Re-apply if `git pull` overwrites it. After that failure, only the 57 module containers were left
+  (no postgres/kong/keycloak/UI), so it needs a full `--cleanup` redeploy, not just a restart.
 - **Holdings `sourceId`:** use **FOLIO** for API-made records, not MARC. The API accepts any valid
   source id without complaint, but MARC-source holdings expect a MARC record behind them.
 - **HTTP 504** = gateway timed out waiting for the module, so the result is unknown. Always GET to check
@@ -117,4 +128,11 @@ what it can do, and whether/how it can integrate with **Drupal**.
 - **DELETE** returns `204` (no body) on success; a holding can only be deleted when it has no items.
 - FOLIO allows duplicate instance titles, so re-POSTing an instance creates a second copy.
 - Lookup tip: `./folio.sh GET /loan-types | grep -E '"(id|name)"'`, then take the id **above** the name.
+- **Requests:** `POST /circulation/requests` needs `requesterId` (user UUID, not barcode). Which types
+  (Hold/Recall/Page) are allowed comes from circulation rules; check first with
+  `GET /circulation/requests/allowed-service-points?operation=create&requesterId=..&itemId=..`.
+- Checking in an item with an open hold does **not** make it Available: it goes to *Awaiting pickup*
+  at the pickup desk, and the request moves to *Open - Awaiting pickup*.
+- **Heredocs:** the closing `EOF` must be at the very start of its line (no spaces); otherwise the
+  shell keeps waiting (`∙` prompt) → Ctrl+C. Keep JSON lines short so pasting never splits a key.
 - Apple Silicon: some FOLIO images may be amd64-only → rely on Rosetta emulation; watch for failures.
