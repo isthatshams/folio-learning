@@ -10,6 +10,13 @@ what it can do, and whether/how it can integrate with **Drupal**.
 
 ## Environment
 
+### Git repo
+- Public on **personal** account: https://github.com/isthatshams/folio-learning
+- Remote uses SSH alias `github.com-personal`; repo-local git identity = personal noreply email
+  (global identity is the work account, so never change these).
+- `CLAUDE.md` is globally gitignored, so it was force-added here: `git add -f CLAUDE.md` if it ever drops out.
+- `eureka-setup/` and `*.log` are ignored.
+
 ### Public demo server (resets regularly — changes don't persist)
 - UI: https://folio-etesting-snapshot-diku.ci.folio.org
 - API gateway: https://folio-etesting-snapshot-kong.ci.folio.org
