@@ -1,0 +1,5 @@
+# Upstream clone of folio-org/eureka-setup (get it from GitHub instead)
+eureka-setup/
+# Local install logs
+*.log
+.DS_Store

@@ -1,0 +1,7 @@
+{
+  "holdingsRecordId": "FILL_ME: the id returned when you created the holding",
+  "barcode": "SHAMS-0001",
+  "status": { "name": "Available" },
+  "materialTypeId": "FILL_ME: the 'book' material type",
+  "permanentLoanTypeId": "FILL_ME: the 'Can circulate' loan type"
+}
