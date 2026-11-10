@@ -42,6 +42,7 @@ what it can do, and whether/how it can integrate with **Drupal**.
   Demo by default; `FOLIO=local ./folio.sh ...` for the local install.
 
 ## Key concepts learned
+- **Architecture write-up:** `architecture.md` (layers diagram, what each part does, Drupal angle).
 - **Architecture:** Java backend modules (`mod-*`) behind an API gateway; React UI (**Stripes**).
   Gateway is **Eureka** (Kong + Keycloak) since Sunflower release (Mar 2026); older docs use **Okapi**.
 - **Multi-tenant:** one server hosts many libraries; every request sends `x-okapi-tenant`.
@@ -84,17 +85,21 @@ what it can do, and whether/how it can integrate with **Drupal**.
   and the new instance gets a new id.)
 
 ### In progress
+- [x] **Local FOLIO running** (2026-11-05, 3rd attempt, deploy took 12 min) without acquisitions, `-q`.
+  UI http://localhost:3000 ✓, `FOLIO=local ./folio.sh ...` ✓, sample users (456 = morty) ✓,
+  36 instances ✓, but **0 holdings/items**: the sample load failed (see gotchas). Create items via Lesson 5 JSON.
+  Local records: instance `ef90b3c7-2ea7-4f40-a754-42eafc1c8455` → holding `ea21f4cd-1b6f-4808-a4e7-998e82313d31`
+  → item `SHAMS-0001` (`862070e2-99ab-4878-8b57-c978b3e58d7e`). `lesson5-2/3` JSON files now hold the
+  **local** ids. Reference data ids (locations, material/loan types, sources, Circ Desk 1) = same as demo.
+  Manual holdings POST works (has a user token), unlike the sample-data load.
 - [~] Lesson 6 — Requests/holds: patron `456` placed a Hold on `SHAMS-0001` while 789 had it
   (request `6775bf77-9f47-49fa-a98e-bb09e40b4571`, body in `lesson6-1-request.json`).
   Check-in → loan Closed, item **Awaiting pickup**, request **Open - Awaiting pickup**,
   hold shelf expires in 3 weeks. Checked out to 456 (`checkout-456.json`) → item Checked out,
   request **Closed - Filled** (drops out of the queue, no position). Next: try a Recall.
-- [ ] Local FOLIO: first deploy failed at tenant entitlements (5-min CLI timeout) → patched to 45 min,
-  redeploy with `--cleanup` next
 - [ ] Practice exercises: user by barcode, search by author
 
 ### Up next
-- [ ] Verify local install works; point `folio.sh` at it
 - [ ] Settings & configuration tour (locations, loan policies, patron groups, permissions/roles)
 - [ ] Data import: loading MARC records
 - [ ] Drupal proof of concept: custom module that searches FOLIO catalog + shows availability
@@ -119,7 +124,34 @@ what it can do, and whether/how it can integrate with **Drupal**.
   installing modules + sample data takes >5 min on M1/Rosetta, but eureka-cli waits only 5 min.
   Fix (local patch): `eureka-cli/constant/constant.go` → `HTTPClientTimeout` and
   `HTTPClientResponseHeaderTimeout` = `45 * time.Minute`, then `go install .` in `eureka-cli/`.
-  Re-apply if `git pull` overwrites it. After that failure, only the 57 module containers were left
+  Also `ModuleReadinessMaxRetries` 70 → 200 (~10 s per check; modules need >12 min to start).
+  Re-apply if `git pull` overwrites it.
+- **Module stuck on `Waiting for changelog lock....`** (Liquibase): it was killed mid-migration during a
+  slow-start restart and left a stale DB lock behind, so it waits forever. Check the lock, then release it:
+  `docker exec postgres psql -U postgres -d folio -c "select * from pubsub_config.databasechangeloglock"`
+  → `update <schema>.databasechangeloglock set locked=false, lockgranted=null, lockedby=null where id=1`
+  (only when no migration is actually running). Hit `mod-pubsub` on 2026-11-05.
+- **Deploy failed at entitlements with `status 400`** (2026-11-05): Docker ran out of RAM (22/24 GB),
+  Keycloak's JVM was `Killed`, mgr-tenant-entitlements got 502 and rolled everything back.
+  Fix: removed acquisitions (orders/invoice/finance/organizations backend + UI, ~5.4 GB) from
+  `~/.eureka/config.combined.yaml` (backup `config.combined.yaml.bak-20261105-1637`), then
+  `eureka-cli buildUi` + `deployApplication -q --cleanup` (`-q` skips OpenSearch/Garage/FTP, unused here).
+- **Local sample data has no holdings/items:** during tenant init, inventory-storage's
+  `POST /holdings-storage/holdings` calls `/user-tenants` without a token → 400 "System user token is
+  required ... mod-inventory-storage" → 500, so holdings (and therefore items) are skipped. Deploy still
+  reports success. Not fixed; possible fix to try: `sidecar-environment:
+  HANDLER_EGRESS_IGNORE_SYSTEM_USER_TOKEN_ERROR: "true"` on mod-inventory-storage (untested).
+- **Local Inventory UI search fails** ("Search could not be processed"): the Inventory app searches via
+  `mod-search` (`/search/instances` → 404 locally), which needs OpenSearch and isn't in `combined`.
+  API CQL search on `/instance-storage/instances` still works. To add it: the `search` profile
+  (`~/.eureka/config.search.yaml`, mod-search + OpenSearch, ~2 GB more RAM; idle stack already ~20.5 GB).
+- **Local "Access Denied … select a service point"** (Requests/Check in/out): fresh install gives
+  `diku_admin` no service points. Fixed via `POST /service-points-users`
+  `{userId, servicePointsIds:[...], defaultServicePointId}` (Circ Desk 1 default, + Circ Desk 2, Online).
+  UI equivalent: Users → diku_admin → Edit → Service points. Log out/in afterwards.
+- **Why local deploy is slow:** all FOLIO module + sidecar images are **amd64-only** → Rosetta;
+  ~60 JVMs start at once on 10 CPUs. Ideas if still too slow: `-p combined-native` (native sidecars),
+  or remove acquisitions modules (finance/invoice/orders/organizations) from the profile config. After that failure, only the 57 module containers were left
   (no postgres/kong/keycloak/UI), so it needs a full `--cleanup` redeploy, not just a restart.
 - **Holdings `sourceId`:** use **FOLIO** for API-made records, not MARC. The API accepts any valid
   source id without complaint, but MARC-source holdings expect a MARC record behind them.
