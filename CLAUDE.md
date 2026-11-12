@@ -44,7 +44,7 @@ what it can do, and whether/how it can integrate with **Drupal**.
 ## Key concepts learned
 - **Architecture write-up:** `architecture.md` (layers diagram, what each part does, Drupal angle).
 - **Architecture:** Java backend modules (`mod-*`) behind an API gateway; React UI (**Stripes**).
-  Gateway is **Eureka** (Kong + Keycloak) since Sunflower release (Mar 2026); older docs use **Okapi**.
+  Gateway is **Eureka** (Kong + Keycloak) since Sunflower (R1 2025); older docs use **Okapi**. Current release = **Trillium (R1 2026, 2026-06-08, supported to 2027-06-30)**; our demo/local = R1-2027 snapshot.
 - **Multi-tenant:** one server hosts many libraries; every request sends `x-okapi-tenant`.
 - **Auth:** `POST /authn/login-with-expiry` → `folioAccessToken` (~10 min) + `folioRefreshToken` (~1 day)
   as cookies; send token as `x-okapi-token` header.
@@ -68,6 +68,7 @@ what it can do, and whether/how it can integrate with **Drupal**.
 ## Progress
 
 ### Done
+- [x] Part 1 (overview) drafted in `docs/01-overview.md` — needs my review
 - [x] What FOLIO is, main apps, architecture overview
 - [x] Explored demo UI: Inventory, Users, Check out / Check in
 - [x] Installed local prerequisites (Go, eureka-cli, hosts, Docker resources)
@@ -102,9 +103,49 @@ what it can do, and whether/how it can integrate with **Drupal**.
 ### Up next
 - [ ] Settings & configuration tour (locations, loan policies, patron groups, permissions/roles)
 - [ ] Data import: loading MARC records
-- [ ] Drupal proof of concept: custom module that searches FOLIO catalog + shows availability
-- [ ] Drupal POC part 2: patron login → my loans / renew
-- [ ] Write up findings for the company (what FOLIO is, effort to adopt, Drupal integration options)
+- [~] Drupal proof of concept: module `folio_search` in `~/Projects/drupal/my-project/public_html/modules/custom/`
+  (site http://my-project.local, native PHP/MySQL, docroot `public_html/`, Drupal 11.4).
+  Done: `/library-search` search box (POST → redirect to `?q=`), results via Twig template with authors,
+  publisher and per-item location / call number / status badge, pager (10/page). Data from mod-search
+  `GET /search/instances?query=keyword all "x" and discoverySuppress==false&expandAll=true&offset=`;
+  location names from `/locations` (cached 1 day in Drupal cache). Anonymous page cache disabled for
+  this page (kill switch), since availability changes and the page cache ignores max-age.
+  settings form `/admin/config/services/folio` (config `folio_search.settings`; password = config override
+  in `sites/default/local.settings.inc`, so `drush cex` never exports it), `FolioClient` service.
+  Step 4 done: token cached in Drupal cache until FOLIO's `accessTokenExpiration` − 60 s (on 401: re-login
+  + retry once); all failures → `FolioException`, logged to channel `folio_search`
+  (`drush watchdog:show --type=folio_search`), page shows "catalog not available", uncached.
+  Cache entries + result pages carry tag `config:folio_search.settings` → saving settings clears them.
+  Timeouts 5 s connect / 15 s total. Wrong tenant → login 400; bad host → cURL error 6.
+  Filters (2026-11-10): Language / Format / Location / Material type in a sidebar, multi-select, in the URL as
+  `?q=..&f[language][]=eng`. CQL: `and languages==("eng" or "ger")` (OR within a filter, AND between filters).
+  Counts from `GET /search/instances/facets?query=..&facet=languages:10&facet=instanceTypeId:10` (repeated
+  `facet` param → built with `GuzzleHttp\Psr7\Query::build`, since Guzzle's array syntax sends `facet[0]`).
+  Each filter's counts exclude its own selection (one facets call per distinct query; 1 call with no filters).
+  Language codes are ISO 639-2 (`eng`, `ger`) → names via PHP intl `Locale::getDisplayLanguage`.
+  `items.status.name` doesn't work as a filter on the demo (0 hits for "Available"), so no "available now" filter.
+  Next: optional extras (cancel a hold, place a hold from search results, availability via JS), then write-up.
+- [x] Drupal POC part 2 (2026-11-10): user base field `folio_barcode` (Library card barcode; only
+  `administer users` can edit it; unique), added on the existing site via `folio_search_update_10001` (`drush updb`).
+  Tab **Library account** at `/user/{uid}/library` (own account or user admins only): loans with Renew
+  buttons, holds (status, place in line, pickup desk), fines total. Uses **mod-patron**, FOLIO's API for
+  public sites: `GET /patron/account/{userId}?includeLoans=true&includeHolds=true&includeCharges=true`,
+  `POST /patron/account/{userId}/item/{itemId}/renew`. Patron lookup: `GET /users?query=barcode=="789"`.
+  FOLIO 422 → `FolioRefusedException`, FOLIO's message shown to the patron (e.g. renewal blocked by a hold).
+  Local Drupal test users: `patron789` (uid 2) / `patron456` (uid 3), log in with `drush uli --name=patron789`.
+  mod-search works on the **demo** only (not local).
+- [~] **Boss deliverable (started 2026-11-10): full documentation first, then a slide deck from it.**
+  Lives in `docs/` (Markdown in this repo). Outline + status table: `docs/README.md`
+  (8 parts: overview → architecture → per-application module chapters → extending/custom module →
+  performance → considerations → use cases/Drupal → recommendation). Per-module template `docs/_module-template.md`.
+  Module inventory generated by `python3 docs/tools/module_inventory.py` (platform-lsp descriptor → FAR app
+  descriptors) → `docs/reference/module-inventory.md`: 39 apps · 101 backend/edge · 76 UI modules (snapshot).
+  pyenv Python here has no SSL → script falls back to curl. Mark claims **[tested]** vs **[docs]**.
+  Plan includes building our own `mod-hello` + `ui-hello` and deploying it locally (Part 4).
+  **2026-11-10: all parts drafted** (01–08, 03-modules/01–09 covering all 101 modules, glossary) and built into
+  `docs/FOLIO-Evaluation-Guide.docx` via `docs/tools/build_docx.js` (no pandoc here; uses npm `docx` + `marked@12`).
+  Waiting for my review → then PowerPoint. eureka-cli has `runLocalModule` (new module → `app-local`) and
+  `interceptModule` (debug in IntelliJ) for the custom-module proof.
 
 ## Gotchas / notes
 - **Reading API errors:** `folio.sh` prints `HTTP <status>` first. 2xx = ok; 422 = valid JSON but a
@@ -163,6 +204,11 @@ what it can do, and whether/how it can integrate with **Drupal**.
 - **Requests:** `POST /circulation/requests` needs `requesterId` (user UUID, not barcode). Which types
   (Hold/Recall/Page) are allowed comes from circulation rules; check first with
   `GET /circulation/requests/allowed-service-points?operation=create&requesterId=..&itemId=..`.
+- **mod-patron hold cancel** (`POST /patron/account/{id}/hold/{requestId}/cancel`) needs the *whole* hold object
+  (requestDate, pickupLocationId, …), not just the reason. Easier: `GET /circulation/requests/{id}`, set
+  `status: "Closed - Cancelled"`, `cancellationReasonId`, `cancelledByUserId`, `cancelledDate`, then `PUT` it back (204).
+- Demo loan policy blocks renewing when another patron has a hold: 422 "Items with this loan policy cannot be
+  renewed when there is an active, pending hold request".
 - Checking in an item with an open hold does **not** make it Available: it goes to *Awaiting pickup*
   at the pickup desk, and the request moves to *Open - Awaiting pickup*.
 - **Heredocs:** the closing `EOF` must be at the very start of its line (no spaces); otherwise the

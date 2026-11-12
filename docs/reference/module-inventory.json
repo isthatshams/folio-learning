@@ -1,0 +1,4023 @@
+{
+ "platform_version": "R1-2027-SNAPSHOT.100200000003450",
+ "eureka_components": [
+  {
+   "name": "folio-kong",
+   "version": "3.10.0-SNAPSHOT.42"
+  },
+  {
+   "name": "folio-keycloak",
+   "version": "26.9.0-SNAPSHOT.135"
+  },
+  {
+   "name": "folio-module-sidecar",
+   "version": "4.1.0-SNAPSHOT.2488"
+  },
+  {
+   "name": "mgr-applications",
+   "version": "4.1.0-SNAPSHOT.2478"
+  },
+  {
+   "name": "mgr-tenants",
+   "version": "4.1.0-SNAPSHOT.2271"
+  },
+  {
+   "name": "mgr-tenant-entitlements",
+   "version": "4.1.0-SNAPSHOT.2489"
+  }
+ ],
+ "applications": [
+  {
+   "name": "app-platform-minimal",
+   "version": "2.2.0-SNAPSHOT.100200000012030",
+   "kind": "required",
+   "description": "Minimal FOLIO platform installation",
+   "dependencies": [],
+   "modules": [
+    {
+     "id": "edge-users-2.3.0-SNAPSHOT.2100",
+     "name": "edge-users",
+     "description": "Retrieve and create users information Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "users",
+      "patron-pin"
+     ],
+     "optional": [
+      "feesfines",
+      "automated-patron-blocks"
+     ],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-configuration-5.14.0-SNAPSHOT.2030",
+     "name": "mod-configuration",
+     "description": "Configuration",
+     "provides": [
+      "configuration 2.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 6,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 7,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-locations-1.0.0-SNAPSHOT.2108",
+     "name": "mod-locations",
+     "description": "Locations Module",
+     "provides": [
+      "location-storage 1.0",
+      "service-point-storage 1.0",
+      "locations-migration 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 36,
+     "requires": [],
+     "optional": [
+      "consortia",
+      "user-tenants"
+     ],
+     "permission_sets": 39,
+     "memory_mb": 682,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-login-keycloak-4.1.0-SNAPSHOT.2213",
+     "name": "mod-login-keycloak",
+     "description": "keycloak-login",
+     "provides": [
+      "login 7.3",
+      "authtoken 2.1",
+      "authtoken2 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 24,
+     "requires": [
+      "users",
+      "users-keycloak"
+     ],
+     "optional": [
+      "configuration"
+     ],
+     "permission_sets": 19,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-notes-8.1.0-SNAPSHOT.2245",
+     "name": "mod-notes",
+     "description": "Notes",
+     "provides": [
+      "notes 4.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 12,
+     "requires": [
+      "users"
+     ],
+     "optional": [],
+     "permission_sets": 15,
+     "memory_mb": 517,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-okapi-facade-4.1.0-SNAPSHOT.2171",
+     "name": "mod-okapi-facade",
+     "description": "Okapi facade",
+     "provides": [
+      "okapi 1.9"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 54,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 52,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-password-validator-4.1.0-SNAPSHOT.2118",
+     "name": "mod-password-validator",
+     "description": "Password Validator Module",
+     "provides": [
+      "password-validator 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 6,
+     "requires": [
+      "users",
+      "login"
+     ],
+     "optional": [],
+     "permission_sets": 5,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    },
+    {
+     "id": "mod-permissions-6.9.0-SNAPSHOT.2011",
+     "name": "mod-permissions",
+     "description": "permissions",
+     "provides": [
+      "permissions 5.8"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_tenantPermissions"
+     ],
+     "endpoints": 11,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 19,
+     "memory_mb": 682,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-roles-keycloak-4.1.0-SNAPSHOT.2653",
+     "name": "mod-roles-keycloak",
+     "description": "roles-keycloak",
+     "provides": [
+      "roles 1.1",
+      "policies 1.1",
+      "roles-user 1.0",
+      "roles-permission-migration 1.0",
+      "capabilities 1.1",
+      "capability-sets 2.0",
+      "role-capabilities 1.1",
+      "role-capability-sets 1.1",
+      "user-capabilities 1.1",
+      "user-capability-sets 1.1",
+      "permissions-users 1.0",
+      "loadable-roles 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 51,
+     "requires": [
+      "permissions"
+     ],
+     "optional": [],
+     "permission_sets": 55,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    },
+    {
+     "id": "mod-scheduler-4.1.0-SNAPSHOT.2470",
+     "name": "mod-scheduler",
+     "description": "Scheduler",
+     "provides": [
+      "scheduler 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 5,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 6,
+     "memory_mb": 517,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    },
+    {
+     "id": "mod-settings-1.4.0-SNAPSHOT.2496",
+     "name": "mod-settings",
+     "description": "settings",
+     "provides": [
+      "base-url 1.0",
+      "locale 1.0",
+      "tenant-addresses 1.0",
+      "settings 1.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 15,
+     "requires": [
+      "authtoken"
+     ],
+     "optional": [
+      "configuration"
+     ],
+     "permission_sets": 19,
+     "memory_mb": 2048,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-tags-3.1.0-SNAPSHOT.2095",
+     "name": "mod-tags",
+     "description": "Tags",
+     "provides": [
+      "tags 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 5,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 6,
+     "memory_mb": 517,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    },
+    {
+     "id": "mod-users-19.7.0-SNAPSHOT.2173",
+     "name": "mod-users",
+     "description": "users",
+     "provides": [
+      "users 16.6",
+      "custom-fields 3.1",
+      "patron-pin 1.0",
+      "user-tenants 1.0",
+      "staging-users 1.2",
+      "users.settings 2.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 55,
+     "requires": [],
+     "optional": [
+      "feesfines",
+      "configuration"
+     ],
+     "permission_sets": 60,
+     "memory_mb": 512,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-users-bl-8.1.0-SNAPSHOT.2017",
+     "name": "mod-users-bl",
+     "description": "users business logic",
+     "provides": [
+      "users-bl 6.1"
+     ],
+     "system_interfaces": [],
+     "endpoints": 17,
+     "requires": [
+      "users",
+      "permissions",
+      "login",
+      "authtoken",
+      "authtoken2",
+      "configuration",
+      "password-validator",
+      "settings",
+      "base-url"
+     ],
+     "optional": [
+      "loan-storage",
+      "feesfines",
+      "service-points",
+      "service-points-users",
+      "notify",
+      "request-storage",
+      "request-preference-storage",
+      "permissions-users"
+     ],
+     "permission_sets": 14,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-users-keycloak-4.1.0-SNAPSHOT.2373",
+     "name": "mod-users-keycloak",
+     "description": "Users business logic (with Keycloak)",
+     "provides": [
+      "users-keycloak 1.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 19,
+     "requires": [
+      "users",
+      "permissions",
+      "login",
+      "configuration",
+      "password-validator",
+      "permissions-users",
+      "capabilities",
+      "policies",
+      "roles-user",
+      "user-capability-sets",
+      "user-capabilities",
+      "loadable-roles",
+      "base-url"
+     ],
+     "optional": [
+      "notify",
+      "service-points",
+      "service-points-users",
+      "user-tenants"
+     ],
+     "permission_sets": 18,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_developer-11.0.1099000000000419",
+    "folio_tags-10.0.1099000000000115",
+    "folio_stripes-core-11.2.1099000000002077",
+    "folio_notes-12.0.1099000000000187",
+    "folio_stripes-smart-components-10.1.1099000000000896",
+    "folio_authorization-policies-2.0.1099000000000160",
+    "folio_authorization-roles-3.0.1099000000000284"
+   ]
+  },
+  {
+   "name": "app-platform-complete",
+   "version": "3.4.0-SNAPSHOT.100200000011363",
+   "kind": "required",
+   "description": "Application comprised of most Folio modules not present in app-platform-minimal",
+   "dependencies": [
+    "app-platform-minimal",
+    "app-search",
+    "app-marc-storage",
+    "app-notification",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "mod-audit-3.1.0-SNAPSHOT.2291",
+     "name": "mod-audit",
+     "description": "Audit Module",
+     "provides": [
+      "audit 1.1",
+      "acquisition-order-events 1.0",
+      "acquisition-order-line-events 1.0",
+      "acquisition-piece-events 1.0",
+      "acquisition-invoice-events 1.0",
+      "acquisition-invoice-line-events 1.0",
+      "acquisition-organization-events 1.0",
+      "circulation-logs 1.3",
+      "audit-config 1.0",
+      "audit-inventory 1.0",
+      "audit-user 1.0",
+      "audit-marc 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 22,
+     "requires": [
+      "users",
+      "template-engine",
+      "inventory",
+      "cancellation-reason-storage"
+     ],
+     "optional": [
+      "circulation-item",
+      "item-storage",
+      "holdings-storage",
+      "instance-storage"
+     ],
+     "permission_sets": 37,
+     "memory_mb": 682,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-calendar-4.1.0-SNAPSHOT.2179",
+     "name": "mod-calendar",
+     "description": "Calendar for Service Point Opening Hours",
+     "provides": [
+      "calendar 5.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 8,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 12,
+     "memory_mb": 490,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-circulation-24.6.0-SNAPSHOT.2524",
+     "name": "mod-circulation",
+     "description": "Circulation Module",
+     "provides": [
+      "requests-reports 0.8",
+      "inventory-reports 0.4",
+      "pick-slips 0.4",
+      "search-slips 0.1",
+      "request-anonymization 0.1",
+      "request-move 0.7",
+      "loan-anonymization 0.1",
+      "declare-item-lost 0.3",
+      "change-due-date 0.1",
+      "claim-item-returned 0.2",
+      "instance-items 0.1",
+      "add-info 0.1",
+      "circulation 14.9",
+      "circulation-rules 1.1",
+      "patron-action-session 0.2",
+      "allowed-service-points 1.2",
+      "circulation-settings 1.0",
+      "print-events 1.0"
+     ],
+     "system_interfaces": [
+      "_timer",
+      "_tenant"
+     ],
+     "endpoints": 59,
+     "requires": [
+      "loan-storage",
+      "circulation-rules-storage",
+      "item-storage",
+      "instance-storage",
+      "holdings-storage",
+      "request-storage",
+      "request-storage-batch",
+      "users",
+      "locations",
+      "material-types",
+      "loan-policy-storage",
+      "request-policy-storage",
+      "fixed-due-date-schedules-storage",
+      "service-points",
+      "calendar",
+      "patron-notice-policy-storage",
+      "patron-notice",
+      "cancellation-reason-storage",
+      "loan-types",
+      "scheduled-notice-storage",
+      "feesfines",
+      "location-units",
+      "patron-action-session-storage",
+      "check-in-storage",
+      "automated-patron-blocks",
+      "notes",
+      "actual-cost-record-storage",
+      "settings",
+      "circulation-settings-storage",
+      "print-events-storage",
+      "actual-cost-fee-fine",
+      "anonymize-storage-loans",
+      "loan-anonymization-preference-storage",
+      "identifier-types",
+      "template-engine",
+      "checkout-lock-storage",
+      "request-queue-lock-storage",
+      "search-inventory",
+      "locale"
+     ],
+     "optional": [
+      "circulation-item"
+     ],
+     "permission_sets": 106,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-circulation-storage-17.6.0-SNAPSHOT.2393",
+     "name": "mod-circulation-storage",
+     "description": "Circulation Storage Module",
+     "provides": [
+      "request-storage-batch 2.1",
+      "loan-storage 7.5",
+      "anonymize-storage-loans 0.1",
+      "loan-anonymization-preference-storage 1.0",
+      "circulation-rules-storage 1.0",
+      "circulation-settings-storage 1.0",
+      "loan-policy-storage 2.5",
+      "request-storage 6.2",
+      "fixed-due-date-schedules-storage 2.0",
+      "staff-slips-storage 1.1",
+      "cancellation-reason-storage 1.2",
+      "patron-notice-policy-storage 0.13",
+      "request-policy-storage 1.0",
+      "actual-cost-record-storage 0.9",
+      "request-preference-storage 2.0",
+      "scheduled-notice-storage 0.6",
+      "tlr-feature-toggle-job-storage 0.1",
+      "patron-action-session-storage 0.3",
+      "check-in-storage 0.3",
+      "checkout-lock-storage 0.1",
+      "request-queue-lock-storage 1.0",
+      "print-events-storage 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 98,
+     "requires": [
+      "item-storage",
+      "holdings-storage",
+      "locations",
+      "service-points"
+     ],
+     "optional": [],
+     "permission_sets": 99,
+     "memory_mb": 512,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-copycat-1.10.0-SNAPSHOT.2040",
+     "name": "mod-copycat",
+     "description": "copycat",
+     "provides": [
+      "copycat-imports 1.1",
+      "copycat-profiles 1.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 6,
+     "requires": [
+      "source-storage-source-records"
+     ],
+     "optional": [
+      "source-manager-job-executions",
+      "source-manager-records"
+     ],
+     "permission_sets": 8,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-courses-1.6.0-SNAPSHOT.2015",
+     "name": "mod-courses",
+     "description": "Courses Storage Module",
+     "provides": [
+      "course-reserves-storage 0.3",
+      "term-storage 0.1",
+      "department-storage 0.1",
+      "course-type-storage 0.1",
+      "processing-status-storage 0.1",
+      "copyright-status-storage 0.1",
+      "role-storage 0.1",
+      "course-storage 0.1",
+      "reserves-storage 0.1"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 60,
+     "requires": [
+      "item-storage",
+      "instance-storage",
+      "holdings-storage",
+      "locations",
+      "service-points",
+      "loan-types",
+      "users"
+     ],
+     "optional": [],
+     "permission_sets": 79,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-data-export-spring-3.7.0-SNAPSHOT.2205",
+     "name": "mod-data-export-spring",
+     "description": "Data Export Spring Module",
+     "provides": [
+      "data-export-spring 2.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_jsonSchemas"
+     ],
+     "endpoints": 18,
+     "requires": [
+      "login",
+      "authtoken",
+      "configuration",
+      "permissions",
+      "users",
+      "inventory",
+      "circulation-logs",
+      "bulk-edit"
+     ],
+     "optional": [
+      "orders",
+      "finance.expense-classes"
+     ],
+     "permission_sets": 22,
+     "memory_mb": 517,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-data-export-worker-3.6.0-SNAPSHOT.2407",
+     "name": "mod-data-export-worker",
+     "description": "Data Export Worker Module",
+     "provides": [
+      "bulk-edit 4.3"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_jsonSchemas"
+     ],
+     "endpoints": 1,
+     "requires": [
+      "users",
+      "inventory",
+      "feesfines",
+      "holdings-storage",
+      "instance-storage",
+      "call-number-types",
+      "audit",
+      "item-damaged-statuses",
+      "electronic-access-relationships",
+      "holdings-note-types",
+      "holdings-sources",
+      "holdings-types",
+      "identifier-types",
+      "contributor-name-types",
+      "ill-policies",
+      "item-note-types",
+      "loan-types",
+      "locations",
+      "material-types",
+      "notes",
+      "service-points",
+      "statistical-codes",
+      "statistical-code-types",
+      "instance-note-types",
+      "permissions",
+      "user-tenants",
+      "instance-formats",
+      "instance-types",
+      "modes-of-issuance",
+      "nature-of-content-terms",
+      "consortium-search",
+      "source-storage-source-records",
+      "circulation-logs",
+      "instance-statuses",
+      "subject-types",
+      "subject-sources",
+      "classification-types",
+      "locale",
+      "tenant-addresses"
+     ],
+     "optional": [
+      "data-export-spring",
+      "email",
+      "template-engine",
+      "users-keycloak",
+      "permissions-users",
+      "consortia",
+      "custom-fields",
+      "erm",
+      "okapi",
+      "orders-storage.purchase-orders",
+      "order-lines",
+      "orders-storage.po-lines",
+      "orders-storage.pieces",
+      "organizations-storage.organizations",
+      "organizations.organizations",
+      "finance-storage.expense-classes",
+      "eholdings",
+      "instance-authority-links-statistics",
+      "entitlements",
+      "tenants"
+     ],
+     "permission_sets": 2,
+     "memory_mb": 2929,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+    },
+    {
+     "id": "mod-feesfines-19.5.0-SNAPSHOT.2100",
+     "name": "mod-feesfines",
+     "description": "feesfines",
+     "provides": [
+      "feesfines 19.1",
+      "actual-cost-fee-fine 0.3",
+      "feefine-reports 2.3"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 94,
+     "requires": [
+      "patron-notice",
+      "holdings-storage",
+      "item-storage",
+      "instance-storage",
+      "locations",
+      "locale",
+      "location-units",
+      "users",
+      "actual-cost-record-storage",
+      "loan-types",
+      "settings",
+      "service-points",
+      "loan-storage",
+      "loan-policy-storage"
+     ],
+     "optional": [],
+     "permission_sets": 96,
+     "memory_mb": 341,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-graphql-1.15.2000543",
+     "name": "mod-graphql",
+     "description": "GraphQL API for FOLIO",
+     "provides": [
+      "graphql 1.5"
+     ],
+     "system_interfaces": [],
+     "endpoints": 1,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 384,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": null
+    },
+    {
+     "id": "mod-ncip-1.18.0-SNAPSHOT.2051",
+     "name": "mod-ncip",
+     "description": "NCIP",
+     "provides": [
+      "ncip 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 2,
+     "requires": [
+      "instance-types",
+      "configuration",
+      "identifier-types",
+      "material-types",
+      "locations",
+      "service-points",
+      "loan-types",
+      "holdings-storage",
+      "inventory",
+      "circulation",
+      "settings"
+     ],
+     "optional": [],
+     "permission_sets": 5,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-patron-6.5.0-SNAPSHOT.2062",
+     "name": "mod-patron",
+     "description": "Patron Services Module",
+     "provides": [
+      "patron 6.7",
+      "patron.settings 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 20,
+     "requires": [
+      "settings",
+      "users",
+      "circulation",
+      "circulation-rules",
+      "feesfines",
+      "inventory",
+      "staging-users",
+      "holdings-storage",
+      "request-policy-storage",
+      "locale"
+     ],
+     "optional": [
+      "tlr-settings",
+      "circulation-settings-storage",
+      "circulation-bff-ecs-request-external",
+      "circulation-bff-requests",
+      "circulation-bff-requests-batch",
+      "allowed-service-points",
+      "circulation-item"
+     ],
+     "permission_sets": 22,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-patron-blocks-1.14.0-SNAPSHOT.2156",
+     "name": "mod-patron-blocks",
+     "description": "Patron Blocks Module",
+     "provides": [
+      "automated-patron-blocks 0.2",
+      "user-summary 0.1",
+      "patron-blocks-synchronization 1.0",
+      "patron-block-conditions 0.1",
+      "patron-block-limits 0.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 13,
+     "requires": [
+      "loan-storage",
+      "users",
+      "feesfines"
+     ],
+     "optional": [],
+     "permission_sets": 13,
+     "memory_mb": 341,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-pubsub-2.18.0-SNAPSHOT.2039",
+     "name": "mod-pubsub",
+     "description": "Pubsub",
+     "provides": [
+      "pubsub-event-types 0.1",
+      "pubsub-publishers 0.1",
+      "pubsub-subscribers 0.1",
+      "pubsub-audit 0.1",
+      "pubsub-publish 0.1",
+      "pubsub-messaging-modules 0.1"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 15,
+     "requires": [
+      "users",
+      "login",
+      "permissions"
+     ],
+     "optional": [],
+     "permission_sets": 28,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
+    },
+    {
+     "id": "mod-remote-storage-4.1.0-SNAPSHOT.2125",
+     "name": "mod-remote-storage",
+     "description": "Remote storage API module",
+     "provides": [
+      "remote-storage-configurations 1.1",
+      "remote-storage-mappings 1.0",
+      "remote-storage-extended-mappings 1.0",
+      "remote-storage-providers 1.0",
+      "remote-storage-accessions 1.1",
+      "remote-storage-retrievals 1.1",
+      "remote-storage-check-in 1.2",
+      "remote-storage-items 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 26,
+     "requires": [
+      "inventory",
+      "inventory-move",
+      "holdings-storage",
+      "identifier-types",
+      "contributor-types",
+      "users",
+      "authtoken",
+      "login",
+      "permissions",
+      "locations",
+      "circulation",
+      "item-storage",
+      "service-points"
+     ],
+     "optional": [
+      "item-note-types"
+     ],
+     "permission_sets": 27,
+     "memory_mb": 679,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=75.0"
+    },
+    {
+     "id": "mod-user-import-3.12.0-SNAPSHOT.2035",
+     "name": "mod-user-import",
+     "description": "User import",
+     "provides": [
+      "user-import 2.3"
+     ],
+     "system_interfaces": [],
+     "endpoints": 1,
+     "requires": [
+      "permissions",
+      "users",
+      "request-preference-storage",
+      "service-points",
+      "okapi"
+     ],
+     "optional": [],
+     "permission_sets": 2,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_servicepoints-9.0.1099000000000099",
+    "folio_checkin-12.1.1099000000000458",
+    "folio_checkout-13.1.1099000000000394",
+    "folio_circulation-13.0.1099000000000523",
+    "folio_plugin-find-user-8.2.1099000000000180",
+    "folio_export-manager-5.1.1099000000000199",
+    "folio_plugin-bursar-export-6.0.1099000000000313",
+    "folio_remote-storage-7.1.1099000000000153",
+    "folio_circulation-log-6.2.1099000000000214",
+    "folio_calendar-13.0.1099000000000259",
+    "folio_courses-7.1.1099000000000233",
+    "folio_requests-13.1.1099000000000507",
+    "folio_tenant-settings-11.0.1099000000000312",
+    "folio_handler-stripes-registry-3.2.1099000000000166",
+    "folio_myprofile-11.0.1099000000000206",
+    "folio_users-13.1.1099000000001651"
+   ]
+  },
+  {
+   "name": "app-acquisitions",
+   "version": "2.1.0-SNAPSHOT.100200000012583",
+   "kind": "optional",
+   "description": "Application Descriptor Repository for the FOLIO Acquisitions application",
+   "dependencies": [
+    "app-platform-complete",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "edge-orders-4.0.0-SNAPSHOT.2058",
+     "name": "edge-orders",
+     "description": "Acquisitions - Orders Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [],
+     "optional": [
+      "gobi",
+      "ebsconet",
+      "login",
+      "mosaic",
+      "order-templates",
+      "custom-fields",
+      "finance.funds",
+      "finance.expense-classes",
+      "finance.budgets",
+      "acquisitions-units",
+      "acquisition-methods",
+      "organizations.organizations",
+      "tenant-addresses",
+      "locations",
+      "material-types",
+      "identifier-types",
+      "contributor-name-types",
+      "users"
+     ],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-finance-6.0.0-SNAPSHOT.2072",
+     "name": "mod-finance",
+     "description": "Finance business logic module",
+     "provides": [
+      "finance.budgets 2.0",
+      "finance.fund-types 2.0",
+      "finance.funds 3.0",
+      "finance.fiscal-years 2.0",
+      "finance.group-fund-fiscal-years 2.0",
+      "finance.ledgers 2.0",
+      "finance.ledger-rollovers 2.0",
+      "finance.ledger-rollovers-logs 1.0",
+      "finance.ledger-rollovers-budgets 1.0",
+      "finance.ledger-rollovers-errors 1.1",
+      "finance.ledger-rollovers-progress 1.0",
+      "finance.groups 2.0",
+      "finance.transactions 6.0",
+      "finance.group-fiscal-year-summaries 1.3",
+      "finance.exchange-rate 1.0",
+      "finance.expense-classes 3.0",
+      "finance.fund-update-logs 1.0",
+      "finance.finance-data 1.0"
+     ],
+     "system_interfaces": [
+      "_jsonSchemas"
+     ],
+     "endpoints": 79,
+     "requires": [
+      "finance-storage.budgets",
+      "finance-storage.expense-classes",
+      "finance-storage.budget-expense-classes",
+      "finance-storage.fund-types",
+      "finance-storage.funds",
+      "finance-storage.fiscal-years",
+      "finance-storage.groups",
+      "finance-storage.ledgers",
+      "finance-storage.transactions",
+      "finance-storage.transaction-totals",
+      "locale",
+      "finance-storage.ledger-rollovers",
+      "finance-storage.ledger-rollovers-logs",
+      "finance-storage.ledger-rollovers-budgets",
+      "finance-storage.ledger-rollovers-progress",
+      "finance-storage.ledger-rollovers-errors",
+      "finance-storage.fund-update-logs",
+      "finance-storage.job-number",
+      "finance-storage.finance-data",
+      "finance-storage.exchange-rate-source"
+     ],
+     "optional": [
+      "acquisitions-units-storage.units",
+      "acquisitions-units-storage.memberships"
+     ],
+     "permission_sets": 94,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-finance-storage-9.0.0-SNAPSHOT.2160",
+     "name": "mod-finance-storage",
+     "description": "Finance CRUD module",
+     "provides": [
+      "finance-storage.budgets 3.0",
+      "finance-storage.expense-classes 3.0",
+      "finance-storage.budget-expense-classes 2.0",
+      "finance-storage.fiscal-years 3.0",
+      "finance-storage.fund-types 2.0",
+      "finance-storage.funds 5.0",
+      "finance-storage.groups 2.0",
+      "finance-storage.ledgers 4.0",
+      "finance-storage.ledger-rollovers 2.0",
+      "finance-storage.ledger-rollovers-logs 1.0",
+      "finance-storage.ledger-rollovers-budgets 1.0",
+      "finance-storage.ledger-rollovers-progress 1.0",
+      "finance-storage.ledger-rollovers-errors 1.0",
+      "finance-storage.transactions 5.0",
+      "finance-storage.transaction-totals 1.0",
+      "finance-storage.fund-update-logs 1.0",
+      "finance-storage.job-number 1.0",
+      "finance-storage.finance-data 1.0",
+      "finance-storage.fiscal-year-hierarchy 1.0",
+      "finance-storage.exchange-rate-source 1.0",
+      "finance-storage.settings 1.0"
+     ],
+     "system_interfaces": [
+      "_timer",
+      "_tenant"
+     ],
+     "endpoints": 91,
+     "requires": [
+      "base-url",
+      "users",
+      "email"
+     ],
+     "optional": [
+      "orders.rollover"
+     ],
+     "permission_sets": 107,
+     "memory_mb": 341,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-invoice-7.0.0-SNAPSHOT.2155",
+     "name": "mod-invoice",
+     "description": "Invoice business logic module",
+     "provides": [
+      "invoice 7.2",
+      "voucher 2.3",
+      "voucher-number 1.0",
+      "batch-voucher.export-configurations 1.1",
+      "batch-group 1.1",
+      "batch-voucher.batch-vouchers 2.0",
+      "batch-voucher.batch-voucher-exports 1.2"
+     ],
+     "system_interfaces": [
+      "_jsonSchemas",
+      "_tenant"
+     ],
+     "endpoints": 47,
+     "requires": [
+      "locale",
+      "finance.funds",
+      "invoice-storage.invoices",
+      "invoice-storage.invoice-lines",
+      "invoice-storage.invoice-number",
+      "invoice-storage.invoice-line-number",
+      "invoice-storage.settings",
+      "order-lines",
+      "voucher-storage.vouchers",
+      "voucher-storage.voucher-lines",
+      "voucher-storage.voucher-number",
+      "acquisitions-units-storage.units",
+      "acquisitions-units-storage.memberships",
+      "batch-voucher-storage.export-configurations",
+      "batch-voucher-storage.batch-vouchers",
+      "finance.transactions",
+      "batch-group-storage.batch-groups",
+      "batch-voucher-storage.batch-voucher-exports",
+      "finance.ledgers",
+      "organizations-storage.organizations",
+      "finance-storage.budget-expense-classes",
+      "finance.exchange-rate",
+      "finance.fiscal-years",
+      "finance.budgets",
+      "finance.expense-classes",
+      "orders-storage.order-invoice-relationships"
+     ],
+     "optional": [
+      "orders",
+      "data-import-converter-storage"
+     ],
+     "permission_sets": 62,
+     "memory_mb": 800,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-invoice-storage-7.0.0-SNAPSHOT.2181",
+     "name": "mod-invoice-storage",
+     "description": "Invoice CRUD module",
+     "provides": [
+      "invoice-storage.invoices 5.0",
+      "invoice-storage.invoice-lines 4.0",
+      "invoice-storage.invoice-number 1.0",
+      "invoice-storage.invoice-line-number 1.0",
+      "voucher-storage.vouchers 1.2",
+      "voucher-storage.voucher-lines 2.1",
+      "voucher-storage.voucher-number 1.1",
+      "batch-voucher-storage.export-configurations 1.0",
+      "batch-voucher-storage.batch-vouchers 2.0",
+      "batch-voucher-storage.batch-voucher-exports 1.1",
+      "batch-group-storage.batch-groups 1.0",
+      "invoice-storage.adjustment-presets 1.0",
+      "invoice-storage.settings 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 61,
+     "requires": [
+      "configuration"
+     ],
+     "optional": [],
+     "permission_sets": 67,
+     "memory_mb": 341,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-orders-14.0.0-SNAPSHOT.2633",
+     "name": "mod-orders",
+     "description": "Orders Business Logic Module",
+     "provides": [
+      "orders 13.1",
+      "order-lines 4.1",
+      "po-number 1.0",
+      "receiving 2.0",
+      "pieces 3.1",
+      "wrapper-pieces 1.0",
+      "acquisition-methods 1.1",
+      "order-templates 1.0",
+      "acquisitions-units 1.1",
+      "titles 1.2",
+      "configuration.reasons-for-closure 1.0",
+      "configuration.prefixes 1.2",
+      "configuration.suffixes 1.2",
+      "orders.rollover 1.0",
+      "orders.holding-summary 1.0",
+      "orders.holding-detail 1.0",
+      "orders.export-history 1.1",
+      "orders.routing-lists 1.0",
+      "orders.bind-pieces 1.0",
+      "pieces.send-claims 1.0"
+     ],
+     "system_interfaces": [
+      "_jsonSchemas",
+      "_tenant"
+     ],
+     "endpoints": 83,
+     "requires": [
+      "acquisitions-units-storage.units",
+      "acquisitions-units-storage.memberships",
+      "orders-storage.acquisition-methods",
+      "locale",
+      "configuration",
+      "orders-storage.settings",
+      "orders-storage.purchase-orders",
+      "orders-storage.pieces",
+      "orders-storage.wrapper-pieces",
+      "orders-storage.receiving-history",
+      "orders-storage.po-lines",
+      "orders-storage.order-templates",
+      "holdings-storage",
+      "orders-storage.po-number",
+      "orders-storage.po-line-number",
+      "orders-storage.order-invoice-relationships",
+      "inventory",
+      "instance-types",
+      "instance-statuses",
+      "item-storage",
+      "identifier-types",
+      "loan-types",
+      "organizations-storage.organizations",
+      "finance.expense-classes",
+      "finance.funds",
+      "finance.transactions",
+      "finance.fiscal-years",
+      "finance.ledgers",
+      "finance-storage.ledgers",
+      "finance.budgets",
+      "orders-storage.titles",
+      "orders-storage.configuration.reasons-for-closure",
+      "orders-storage.configuration.prefixes",
+      "orders-storage.configuration.suffixes",
+      "orders-storage.routing-lists",
+      "orders-storage.settings",
+      "orders-storage.batch-tracking",
+      "circulation",
+      "request-move",
+      "finance-storage.budget-expense-classes",
+      "finance.exchange-rate",
+      "finance.ledger-rollovers",
+      "finance.ledger-rollovers-progress",
+      "finance.ledger-rollovers-errors",
+      "tags",
+      "orders-storage.export-history",
+      "user-tenants",
+      "users",
+      "template-engine",
+      "holdings-sources",
+      "locations",
+      "material-types",
+      "contributor-name-types",
+      "organizations.organizations"
+     ],
+     "optional": [
+      "invoice",
+      "consortia",
+      "data-export-spring",
+      "source-manager-job-executions",
+      "data-import-converter-storage"
+     ],
+     "permission_sets": 110,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-orders-storage-15.0.0-SNAPSHOT.2393",
+     "name": "mod-orders-storage",
+     "description": "Orders CRUD module",
+     "provides": [
+      "orders-storage.pieces 5.0",
+      "orders-storage.wrapper-pieces 1.0",
+      "orders-storage.titles 1.1",
+      "orders-storage.po-lines 13.1",
+      "orders-storage.acquisition-methods 1.1",
+      "orders-storage.purchase-orders 8.1",
+      "orders-storage.receiving-history 4.0",
+      "orders-storage.po-number 2.0",
+      "orders-storage.po-line-number 2.0",
+      "orders-storage.order-invoice-relationships 1.0",
+      "orders-storage.order-templates 1.0",
+      "orders-storage.order-template-categories 1.0",
+      "acquisitions-units-storage.units 1.1",
+      "acquisitions-units-storage.memberships 1.0",
+      "orders-storage.configuration.reasons-for-closure 1.0",
+      "orders-storage.configuration.prefixes 1.1",
+      "orders-storage.configuration.suffixes 1.1",
+      "orders-storage.export-history 1.1",
+      "orders-storage.audit-outbox 1.0",
+      "orders-storage.claiming 1.0",
+      "custom-fields 3.2",
+      "orders-storage.routing-lists 1.0",
+      "orders-storage.settings 1.0",
+      "orders-storage.batch-tracking 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 102,
+     "requires": [
+      "locale",
+      "user-tenants",
+      "holdings-storage",
+      "holdings-storage-batch-sync",
+      "instance-storage",
+      "configuration",
+      "finance-storage.fiscal-years"
+     ],
+     "optional": [],
+     "permission_sets": 128,
+     "memory_mb": 341,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-organizations-2.3.0-SNAPSHOT.2080",
+     "name": "mod-organizations",
+     "description": "Organizations business logic module",
+     "provides": [
+      "organizations.organizations 1.2",
+      "banking-information 1.0"
+     ],
+     "system_interfaces": [
+      "_jsonSchemas"
+     ],
+     "endpoints": 10,
+     "requires": [
+      "organizations-storage.organizations",
+      "acquisitions-units-storage.units",
+      "acquisitions-units-storage.memberships",
+      "organizations-storage.banking-information"
+     ],
+     "optional": [],
+     "permission_sets": 16,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-organizations-storage-5.1.0-SNAPSHOT.2110",
+     "name": "mod-organizations-storage",
+     "description": "Organizations CRUD module",
+     "provides": [
+      "organizations-storage.categories 1.1",
+      "organizations-storage.contacts 2.0",
+      "organizations-storage.privileged-contacts 1.0",
+      "organizations-storage.interfaces 2.1",
+      "organizations-storage.organization-types 1.0",
+      "organizations-storage.banking-account-types 1.0",
+      "organizations-storage.banking-information 1.0",
+      "organizations-storage.settings 1.1",
+      "organizations-storage.organizations 3.3"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_jsonSchemas",
+      "_timer"
+     ],
+     "endpoints": 49,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 60,
+     "memory_mb": 341,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_organizations-7.1.1099000000000265",
+    "folio_orders-10.0.1099000000001189",
+    "folio_invoice-8.1.1099000000000580",
+    "folio_finance-9.1.1099000000000745",
+    "folio_receiving-9.0.1099000000000604",
+    "folio_claims-3.0.1099000000000336",
+    "folio_acquisition-units-7.1.1099000000000145",
+    "folio_plugin-find-organization-6.2.1099000000000102",
+    "folio_plugin-find-contact-6.2.1099000000000100",
+    "folio_plugin-find-interface-6.2.1099000000000097",
+    "folio_plugin-find-fund-4.2.1099000000000085",
+    "folio_plugin-find-po-line-7.0.1099000000000184"
+   ]
+  },
+  {
+   "name": "app-agreements",
+   "version": "1.1.0-SNAPSHOT.100200000011997",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO Agreements application",
+   "dependencies": [
+    "app-licenses"
+   ],
+   "modules": [
+    {
+     "id": "mod-agreements-7.5.0-SNAPSHOT.2063",
+     "name": "mod-agreements",
+     "description": "mod-agreements",
+     "provides": [
+      "erm 7.5",
+      "dashboard 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 140,
+     "requires": [
+      "okapi"
+     ],
+     "optional": [
+      "usage-data-providers",
+      "licenses",
+      "eholdings",
+      "organizations.organizations",
+      "acquisitions-units"
+     ],
+     "permission_sets": 186,
+     "memory_mb": 4096,
+     "uses_kafka": false,
+     "db_pool": "50",
+     "java_options": "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=67.0 -XX:+PrintFlagsFinal"
+    }
+   ],
+   "ui_modules": [
+    "folio_agreements-12.2.1099000000002114",
+    "folio_plugin-find-agreement-12.2.1099000000000170",
+    "folio_plugin-find-eresource-8.2.1099000000000171",
+    "folio_local-kb-admin-9.2.1099000000000253",
+    "folio_erm-comparisons-8.2.1099000000000234"
+   ]
+  },
+  {
+   "name": "app-authority-records",
+   "version": "1.1.0-SNAPSHOT.100200000007606",
+   "kind": "optional",
+   "description": "Authority Records Application",
+   "dependencies": [
+    "app-platform-minimal",
+    "app-search",
+    "app-marc-storage",
+    "app-quick-marc"
+   ],
+   "modules": [
+    {
+     "id": "mod-entities-links-5.1.0-SNAPSHOT.2503",
+     "name": "mod-entities-links",
+     "description": "Entities Links",
+     "provides": [
+      "instance-authority-links 2.2",
+      "instance-authority-linking-rules 1.1",
+      "instance-authority-links-statistics 3.0",
+      "instance-authority-links-suggestions 1.2",
+      "authority-storage 2.2",
+      "authority-note-types 1.0",
+      "authority-identifier-types 1.0",
+      "authority-heading-types 1.0",
+      "authority-source-files 2.2",
+      "authorities-config 1.0",
+      "authority-reindex 0.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 34,
+     "requires": [
+      "source-storage-source-records",
+      "source-storage-batch"
+     ],
+     "optional": [
+      "users",
+      "user-tenants",
+      "consortia",
+      "specification-storage",
+      "instance-storage",
+      "mapping-rules-provider",
+      "mapping-metadata-provider"
+     ],
+     "permission_sets": 42,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "10",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_marc-authorities-8.1.1099000000001747",
+    "folio_plugin-find-authority-6.0.1099000000000153",
+    "folio_stripes-authority-components-7.1.1099000000000281"
+   ]
+  },
+  {
+   "name": "app-bulk-edit",
+   "version": "2.1.0-SNAPSHOT.100200000011833",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO bulk-edit application",
+   "dependencies": [
+    "app-fqm",
+    "app-search",
+    "app-marc-storage",
+    "app-inventory",
+    "app-data-import"
+   ],
+   "modules": [
+    {
+     "id": "mod-bulk-operations-2.4.0-SNAPSHOT.2748",
+     "name": "mod-bulk-operations",
+     "description": "Bulk operations API.",
+     "provides": [
+      "bulk-operations 1.8"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 20,
+     "requires": [
+      "login",
+      "holdings-storage",
+      "instance-storage",
+      "inventory",
+      "locations",
+      "loan-types",
+      "electronic-access-relationships",
+      "statistical-codes",
+      "ill-policies",
+      "holdings-types",
+      "call-number-types",
+      "holdings-sources",
+      "holdings-note-types",
+      "item-note-types",
+      "item-damaged-statuses",
+      "service-points",
+      "users",
+      "bulk-edit",
+      "data-export-spring",
+      "instance-statuses",
+      "modes-of-issuance",
+      "instance-types",
+      "nature-of-content-terms",
+      "instance-formats",
+      "fqm-query",
+      "entity-types",
+      "instance-note-types",
+      "contributor-types",
+      "permissions",
+      "data-import-converter-storage",
+      "source-manager-job-executions",
+      "metadata-provider-job-execution-logs",
+      "mapping-rules-provider",
+      "source-storage-batch",
+      "consortium-search",
+      "data-import",
+      "user-tenants",
+      "subject-types",
+      "subject-sources",
+      "classification-types",
+      "okapi",
+      "statistical-code-types",
+      "material-types",
+      "source-storage-source-records",
+      "locale",
+      "users-bl",
+      "users-keycloak"
+     ],
+     "optional": [
+      "custom-fields",
+      "permissions-users",
+      "consortia"
+     ],
+     "permission_sets": 26,
+     "memory_mb": 2929,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_bulk-edit-5.1.1099000000001200"
+   ]
+  },
+  {
+   "name": "app-consortia",
+   "version": "1.5.0-SNAPSHOT.100200000012826",
+   "kind": "optional",
+   "description": "Application for Quesnelia",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-consortia-keycloak-2.0.0-SNAPSHOT.2192",
+     "name": "mod-consortia-keycloak",
+     "description": "Consortia integration business logic module",
+     "provides": [
+      "consortia 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 40,
+     "requires": [
+      "login",
+      "users",
+      "users-keycloak",
+      "user-tenants",
+      "capability-sets",
+      "roles",
+      "roles-user",
+      "policies",
+      "user-capability-sets",
+      "user-capabilities",
+      "role-capability-sets",
+      "role-capabilities",
+      "users-bl",
+      "okapi"
+     ],
+     "optional": [
+      "inventory",
+      "custom-fields",
+      "pieces",
+      "call-number-types",
+      "classification-types",
+      "contributor-types",
+      "electronic-access-relationships",
+      "holdings-note-types",
+      "holdings-types",
+      "holdings-sources",
+      "identifier-types",
+      "instance-formats",
+      "instance-note-types",
+      "instance-statuses",
+      "instance-types",
+      "item-note-types",
+      "loan-types",
+      "locations",
+      "modes-of-issuance",
+      "nature-of-content-terms",
+      "subject-sources",
+      "subject-types",
+      "statistical-codes",
+      "statistical-code-types",
+      "material-types",
+      "cancellation-reason-storage",
+      "alternative-title-types",
+      "contributor-name-types"
+     ],
+     "permission_sets": 43,
+     "memory_mb": 669,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-consortia-manager",
+   "version": "1.5.0-SNAPSHOT.100200000012396",
+   "kind": "optional",
+   "description": "Application for FOLIO",
+   "dependencies": [
+    "app-consortia"
+   ],
+   "modules": [],
+   "ui_modules": [
+    "folio_consortia-settings-3.2.1099000000000264"
+   ]
+  },
+  {
+   "name": "app-dashboard",
+   "version": "1.1.0-SNAPSHOT.100200000010129",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO Agreements application",
+   "dependencies": [
+    "app-service-interaction"
+   ],
+   "modules": [],
+   "ui_modules": [
+    "folio_dashboard-7.2.1099000000000281"
+   ]
+  },
+  {
+   "name": "app-data-export",
+   "version": "1.1.0-SNAPSHOT.100200000010483",
+   "kind": "optional",
+   "description": "Application descriptor for the data export application",
+   "dependencies": [
+    "app-platform-minimal",
+    "app-search",
+    "app-marc-storage",
+    "app-authority-records",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "mod-data-export-5.5.0-SNAPSHOT.2760",
+     "name": "mod-data-export",
+     "description": "Data Export Module",
+     "provides": [
+      "data-export 5.4"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 28,
+     "requires": [
+      "source-storage-source-records",
+      "users",
+      "instance-storage",
+      "holdings-storage",
+      "item-storage",
+      "nature-of-content-terms",
+      "identifier-types",
+      "contributor-name-types",
+      "locations",
+      "location-units",
+      "material-types",
+      "instance-types",
+      "instance-formats",
+      "electronic-access-relationships",
+      "modes-of-issuance",
+      "holdings-note-types",
+      "item-note-types",
+      "alternative-title-types",
+      "authority-storage",
+      "loan-types",
+      "user-tenants",
+      "source-storage-stream",
+      "resource-ids-streaming",
+      "call-number-types",
+      "inventory-record-bulk",
+      "consortium-search",
+      "permissions",
+      "base-url"
+     ],
+     "optional": [
+      "consortia",
+      "permissions-users",
+      "users-keycloak",
+      "fqm-query"
+     ],
+     "permission_sets": 31,
+     "memory_mb": 517,
+     "uses_kafka": false,
+     "db_pool": "10",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_data-export-7.1.1099000000000329"
+   ]
+  },
+  {
+   "name": "app-data-import",
+   "version": "1.1.0-SNAPSHOT.100200000004177",
+   "kind": "optional",
+   "description": "Data import application",
+   "dependencies": [
+    "app-platform-minimal",
+    "app-marc-storage",
+    "app-inventory",
+    "app-authority-records"
+   ],
+   "modules": [
+    {
+     "id": "mod-data-import-3.5.0-SNAPSHOT.2075",
+     "name": "mod-data-import",
+     "description": "Data Import Module",
+     "provides": [
+      "data-import 3.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 23,
+     "requires": [
+      "source-manager-job-executions",
+      "users"
+     ],
+     "optional": [],
+     "permission_sets": 23,
+     "memory_mb": 517,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
+    },
+    {
+     "id": "mod-di-converter-storage-2.6.0-SNAPSHOT.2175",
+     "name": "mod-di-converter-storage",
+     "description": "Data Import Converter Storage",
+     "provides": [
+      "data-import-converter-storage 1.5",
+      "converter-storage-forms-configs 1.2",
+      "field-protection-settings 1.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 42,
+     "requires": [
+      "users"
+     ],
+     "optional": [],
+     "permission_sets": 43,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
+    },
+    {
+     "id": "mod-source-record-manager-4.1.0-SNAPSHOT.2277",
+     "name": "mod-source-record-manager",
+     "description": "Source Record Manager Module",
+     "provides": [
+      "source-manager-job-executions 3.4",
+      "source-manager-records 2.1",
+      "metadata-provider-job-execution-logs 1.1",
+      "mapping-rules-provider 2.0",
+      "mapping-metadata-provider 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_jsonSchemas"
+     ],
+     "endpoints": 22,
+     "requires": [
+      "instance-date-types",
+      "subject-sources",
+      "subject-types",
+      "source-storage-snapshots",
+      "source-storage-records",
+      "source-storage-source-records",
+      "users",
+      "locale",
+      "user-tenants",
+      "identifier-types",
+      "electronic-access-relationships",
+      "classification-types",
+      "instance-types",
+      "instance-formats",
+      "contributor-name-types",
+      "contributor-types",
+      "instance-note-types",
+      "instance-preceding-succeeding-titles",
+      "alternative-title-types",
+      "data-import-converter-storage",
+      "modes-of-issuance",
+      "source-storage-batch",
+      "call-number-types",
+      "holdings-types",
+      "holdings-note-types",
+      "instance-relationship-types",
+      "instance-statuses",
+      "item-damaged-statuses",
+      "item-note-types",
+      "ill-policies",
+      "loan-types",
+      "locations",
+      "material-types",
+      "nature-of-content-terms",
+      "statistical-codes",
+      "statistical-code-types",
+      "field-protection-settings"
+     ],
+     "optional": [
+      "instance-authority-linking-rules",
+      "authority-note-types",
+      "authority-source-files",
+      "authority-identifier-types"
+     ],
+     "permission_sets": 23,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "15",
+     "java_options": "-XX:MaxRAMPercentage=66.0  -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
+    }
+   ],
+   "ui_modules": [
+    "folio_data-import-11.0.1099000000000418",
+    "folio_plugin-find-import-profile-10.0.1099000000000108"
+   ]
+  },
+  {
+   "name": "app-dcb",
+   "version": "2.1.0-SNAPSHOT.100200000011015",
+   "kind": "optional",
+   "description": "Application for DCB related transactions in folio",
+   "dependencies": [
+    "app-platform-complete",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "edge-dcb-2.1.0-SNAPSHOT.2068",
+     "name": "edge-dcb",
+     "description": "Edge DCB API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "login",
+      "transactions",
+      "dcb_refresh_shadow_locations"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Drequest_timeout_ms=7200000"
+    },
+    {
+     "id": "mod-circulation-item-2.1.0-SNAPSHOT.2067",
+     "name": "mod-circulation-item",
+     "description": "Circulation Item API module",
+     "provides": [
+      "circulation-item 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 4,
+     "requires": [
+      "login",
+      "permissions",
+      "locations"
+     ],
+     "optional": [],
+     "permission_sets": 5,
+     "memory_mb": 679,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=75.0"
+    },
+    {
+     "id": "mod-dcb-2.1.0-SNAPSHOT.2371",
+     "name": "mod-dcb",
+     "description": "Manage DCB related transactions in folio.",
+     "provides": [
+      "transactions 1.6",
+      "ecs-request-transactions 1.2",
+      "dcb_refresh_shadow_locations 2.0",
+      "dcb.settings 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 17,
+     "requires": [
+      "request-storage",
+      "circulation",
+      "loan-policy-storage",
+      "users",
+      "inventory",
+      "login",
+      "permissions",
+      "item-storage",
+      "holdings-storage",
+      "service-points",
+      "circulation-item",
+      "material-types",
+      "loan-types",
+      "locations",
+      "location-units",
+      "holdings-sources",
+      "instance-types",
+      "calendar",
+      "cancellation-reason-storage"
+     ],
+     "optional": [],
+     "permission_sets": 18,
+     "memory_mb": 669,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-ebsconet",
+   "version": "1.2.0-SNAPSHOT.100200000009759",
+   "kind": "optional",
+   "description": "Application Descriptor Repository for the FOLIO Ebsconet integration",
+   "dependencies": [
+    "app-acquisitions"
+   ],
+   "modules": [
+    {
+     "id": "mod-ebsconet-3.0.0-SNAPSHOT.2034",
+     "name": "mod-ebsconet",
+     "description": "Ebsconet integration business logic module",
+     "provides": [
+      "ebsconet 2.0"
+     ],
+     "system_interfaces": [],
+     "endpoints": 3,
+     "requires": [
+      "orders",
+      "order-lines",
+      "organizations.organizations",
+      "finance.expense-classes",
+      "finance.funds",
+      "notes"
+     ],
+     "optional": [],
+     "permission_sets": 4,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=80.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-edge-complete",
+   "version": "2.3.0-SNAPSHOT.100200000011192",
+   "kind": "optional",
+   "description": "Application comprised of Folio edge modules",
+   "dependencies": [
+    "app-platform-complete",
+    "app-agreements"
+   ],
+   "modules": [
+    {
+     "id": "edge-caiasoft-3.1.0-SNAPSHOT.2066",
+     "name": "edge-caiasoft",
+     "description": "Edge CaiaiSoft API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "login",
+      "remote-storage-configurations",
+      "remote-storage-accessions",
+      "remote-storage-retrievals",
+      "remote-storage-check-in"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Drequest_timeout_ms=7200000"
+    },
+    {
+     "id": "edge-connexion-1.6.0-SNAPSHOT.2031",
+     "name": "edge-connexion",
+     "description": "edge-connexion",
+     "provides": [
+      "connexion 1.0"
+     ],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "login",
+      "copycat-imports",
+      "copycat-profiles"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 34,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "edge-courses-1.8.0-SNAPSHOT.2074",
+     "name": "edge-courses",
+     "description": "Retrieve course-reserve information Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "course-reserves-storage",
+      "login"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "edge-dematic-3.1.0-SNAPSHOT.2101",
+     "name": "edge-dematic",
+     "description": "Edge Dematic API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "login",
+      "remote-storage-configurations",
+      "remote-storage-accessions",
+      "remote-storage-retrievals",
+      "remote-storage-check-in",
+      "remote-storage-items"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Drequest_timeout_ms=7200000"
+    },
+    {
+     "id": "edge-erm-1.6.0-SNAPSHOT.2064",
+     "name": "edge-erm",
+     "description": "Retrieve license term information Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "login",
+      "erm"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "edge-ncip-1.12.0-SNAPSHOT.2039",
+     "name": "edge-ncip",
+     "description": "Edge NCIP",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "ncip",
+      "login"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "edge-patron-5.5.0-SNAPSHOT.2024",
+     "name": "edge-patron",
+     "description": "Patron Services Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "users",
+      "patron",
+      "circulation",
+      "login"
+     ],
+     "optional": [
+      "circulation-bff-users"
+     ],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "edge-sip2-4.1.0-SNAPSHOT.2146",
+     "name": "edge-sip2",
+     "description": "SIP2 Module",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "login",
+      "circulation",
+      "users",
+      "configuration",
+      "feesfines",
+      "search-inventory",
+      "locale",
+      "settings",
+      "users-bl",
+      "patron-pin",
+      "holdings-storage",
+      "inventory",
+      "automated-patron-blocks"
+     ],
+     "optional": [],
+     "permission_sets": 3,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-eholdings",
+   "version": "1.1.0-SNAPSHOT.100200000012681",
+   "kind": "optional",
+   "description": "eHoldings Application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-kb-ebsco-java-8.0.0-SNAPSHOT.2372",
+     "name": "mod-kb-ebsco-java",
+     "description": "kb-ebsco",
+     "provides": [
+      "eholdings 5.0"
+     ],
+     "system_interfaces": [
+      "_jsonSchemas",
+      "_ramls",
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 73,
+     "requires": [
+      "users"
+     ],
+     "optional": [
+      "locale"
+     ],
+     "permission_sets": 79,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_eholdings-11.2.1099000000000837",
+    "folio_plugin-find-package-title-7.1.1099000000000157"
+   ]
+  },
+  {
+   "name": "app-erm-usage",
+   "version": "3.1.0-SNAPSHOT.100200000012364",
+   "kind": "optional",
+   "description": "Application for ERM Usage platform installation for Quesnelia",
+   "dependencies": [
+    "app-acquisitions",
+    "app-agreements"
+   ],
+   "modules": [
+    {
+     "id": "mod-erm-usage-6.0.0-SNAPSHOT.2241",
+     "name": "mod-erm-usage",
+     "description": "erm-usage",
+     "provides": [
+      "usage-data-providers 4.0",
+      "counter-reports 5.1",
+      "custom-reports 2.0",
+      "erm-usage-files 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 28,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 29,
+     "memory_mb": 2048,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-erm-usage-harvester-6.0.0-SNAPSHOT.2257",
+     "name": "mod-erm-usage-harvester",
+     "description": "erm-usage-harvester",
+     "provides": [
+      "erm-usage-harvester 3.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 12,
+     "requires": [
+      "usage-data-providers",
+      "counter-reports"
+     ],
+     "optional": [
+      "settings"
+     ],
+     "permission_sets": 15,
+     "memory_mb": 3000,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-eusage-reports-3.1.1-SNAPSHOT.2027",
+     "name": "mod-eusage-reports",
+     "description": "eusage reports",
+     "provides": [
+      "eusage-reports 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 12,
+     "requires": [
+      "erm",
+      "counter-reports",
+      "order-lines",
+      "invoice-storage.invoice-lines",
+      "invoice-storage.invoices",
+      "finance-storage.budgets",
+      "finance-storage.fiscal-years",
+      "finance-storage.transactions"
+     ],
+     "optional": [],
+     "permission_sets": 14,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_plugin-eusage-reports-4.1.1099000000000246",
+    "folio_erm-usage-13.0.1099000000001190",
+    "folio_plugin-find-erm-usage-data-provider-7.1.1099000000000183"
+   ]
+  },
+  {
+   "name": "app-fqm",
+   "version": "2.1.0-SNAPSHOT.100200000012506",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO FQM application",
+   "dependencies": [
+    "app-acquisitions"
+   ],
+   "modules": [
+    {
+     "id": "edge-fqm-4.2.0-SNAPSHOT.2141",
+     "name": "edge-fqm",
+     "description": "Edge FQM API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "login",
+      "fqm-query",
+      "entity-types"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-fqm-manager-4.2.0-SNAPSHOT.4045",
+     "name": "mod-fqm-manager",
+     "description": "FQM Manager Module",
+     "provides": [
+      "entity-types 2.1",
+      "fqm-query 2.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 23,
+     "requires": [
+      "settings",
+      "users",
+      "user-tenants"
+     ],
+     "optional": [
+      "consortia",
+      "permissions",
+      "permissions-users",
+      "finance.exchange-rate",
+      "search-facets",
+      "actual-cost-record-storage",
+      "acquisition-methods",
+      "acquisitions-units-storage.units",
+      "acquisitions-units",
+      "authority-storage",
+      "authority-note-types",
+      "authority-source-files",
+      "automated-patron-blocks",
+      "alternative-title-types",
+      "batch-group",
+      "call-number-types",
+      "circulation",
+      "classification-types",
+      "configuration",
+      "contributor-name-types",
+      "contributor-types",
+      "electronic-access-relationships",
+      "feesfines",
+      "finance.budgets",
+      "finance.expense-classes",
+      "finance.fiscal-years",
+      "finance.fund-types",
+      "finance.funds",
+      "finance.groups",
+      "finance.ledgers",
+      "finance.transactions",
+      "holdings-note-types",
+      "holdings-storage",
+      "holdings-types",
+      "identifier-types",
+      "instance-date-types",
+      "instance-formats",
+      "instance-note-types",
+      "instance-preceding-succeeding-titles",
+      "instance-statuses",
+      "instance-storage",
+      "instance-types",
+      "invoice",
+      "item-note-types",
+      "item-storage",
+      "linked-data",
+      "loan-policy-storage",
+      "loan-storage",
+      "loan-types",
+      "location-units",
+      "locations",
+      "material-types",
+      "modes-of-issuance",
+      "nature-of-content-terms",
+      "oa",
+      "pieces",
+      "titles",
+      "orders-storage.pieces",
+      "orders-storage.po-lines",
+      "orders-storage.purchase-orders",
+      "orders-storage.titles",
+      "orders",
+      "organizations-storage.organization-types",
+      "organizations-storage.organizations",
+      "organizations.organizations",
+      "erm",
+      "service-points",
+      "source-storage-records",
+      "statistical-code-types",
+      "statistical-codes",
+      "subject-sources",
+      "subject-types",
+      "tags",
+      "user-summary",
+      "users-bl",
+      "voucher-storage.voucher-lines",
+      "voucher-storage.voucher-number",
+      "voucher-storage.vouchers",
+      "voucher"
+     ],
+     "permission_sets": 24,
+     "memory_mb": 600,
+     "uses_kafka": false,
+     "db_pool": "12",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_plugin-query-builder-3.0.2099000000001713"
+   ]
+  },
+  {
+   "name": "app-gobi",
+   "version": "1.2.0-SNAPSHOT.100200000011797",
+   "kind": "optional",
+   "description": "Application Descriptor Repository for the FOLIO Gobi integration",
+   "dependencies": [
+    "app-acquisitions",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "mod-gobi-4.0.0-SNAPSHOT.2096",
+     "name": "mod-gobi",
+     "description": "GOBI\u00ae Module",
+     "provides": [
+      "gobi 1.12",
+      "custom-mapping 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 11,
+     "requires": [
+      "orders",
+      "tenant-addresses",
+      "contributor-name-types",
+      "material-types",
+      "organizations-storage.organizations",
+      "finance.funds",
+      "identifier-types",
+      "finance.expense-classes",
+      "acquisition-methods",
+      "acquisitions-units",
+      "consortium-search",
+      "configuration"
+     ],
+     "optional": [],
+     "permission_sets": 14,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_gobi-settings-4.2.1099000000000180"
+   ]
+  },
+  {
+   "name": "app-inn-reach",
+   "version": "2.1.0-SNAPSHOT.100200000012007",
+   "kind": "optional",
+   "description": "Application for mod-inn-reach project in the folio",
+   "dependencies": [
+    "app-platform-complete",
+    "app-marc-storage",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "edge-inn-reach-4.1.0-SNAPSHOT.2168",
+     "name": "edge-inn-reach",
+     "description": "INN-REACH system Edge API module",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "inn-reach",
+      "login",
+      "users",
+      "permissions"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-inn-reach-4.1.0-SNAPSHOT.2317",
+     "name": "mod-inn-reach",
+     "description": "INN Reach API module",
+     "provides": [
+      "inn-reach 1.3"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 83,
+     "requires": [
+      "login",
+      "instance-iteration",
+      "permissions",
+      "users",
+      "inventory",
+      "service-points-users",
+      "inventory-view",
+      "material-types",
+      "automated-patron-blocks",
+      "patron",
+      "circulation",
+      "circulation-settings",
+      "configuration",
+      "source-storage-records",
+      "feesfines",
+      "cancellation-reason-storage",
+      "holdings-sources",
+      "holdings-storage",
+      "hrid-settings-storage",
+      "instance-storage",
+      "instance-types",
+      "item-storage",
+      "locations",
+      "request-preference-storage",
+      "service-points",
+      "contributor-name-types"
+     ],
+     "optional": [],
+     "permission_sets": 111,
+     "memory_mb": 512,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_inn-reach-6.2.1099000000000274"
+   ]
+  },
+  {
+   "name": "app-inventory",
+   "version": "1.1.0-SNAPSHOT.100200000005255",
+   "kind": "optional",
+   "description": "Inventory Application",
+   "dependencies": [
+    "app-platform-minimal",
+    "app-search",
+    "app-marc-storage"
+   ],
+   "modules": [
+    {
+     "id": "edge-inventory-2.4.0-SNAPSHOT.2166",
+     "name": "edge-inventory",
+     "description": "Retrieve inventory information Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "inventory",
+      "login",
+      "identifier-types",
+      "nature-of-content-terms",
+      "service-points",
+      "instance-formats",
+      "modes-of-issuance",
+      "holdings-storage",
+      "instance-types",
+      "instance-storage",
+      "instance-note-types",
+      "material-types",
+      "source-storage-records",
+      "user-tenants",
+      "consortium-search",
+      "search-facets",
+      "holdings-note-types"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-inventory-22.1.0-SNAPSHOT.2419",
+     "name": "mod-inventory",
+     "description": "Inventory Module",
+     "provides": [
+      "inventory 14.4",
+      "inventory-batch 3.0",
+      "inventory-config 0.2",
+      "isbn-utils 2.0",
+      "inventory-move 0.3",
+      "inventory-update-ownership 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 38,
+     "requires": [
+      "holdings-sources",
+      "user-tenants",
+      "item-storage",
+      "instance-storage",
+      "instance-storage-batch-sync",
+      "holdings-storage",
+      "material-types",
+      "loan-types",
+      "locations",
+      "instance-types",
+      "identifier-types",
+      "contributor-name-types",
+      "users",
+      "instance-preceding-succeeding-titles",
+      "source-storage-records",
+      "source-storage-snapshots",
+      "bound-with-parts-storage"
+     ],
+     "optional": [
+      "mapping-metadata-provider",
+      "source-manager-job-executions",
+      "source-manager-records",
+      "data-import-converter-storage",
+      "order-lines",
+      "consortia",
+      "circulation-bff-ecs-request-external",
+      "circulation-bff-requests",
+      "staging-users",
+      "instance-authority-links",
+      "authority-storage",
+      "request-storage"
+     ],
+     "permission_sets": 40,
+     "memory_mb": 682,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Dorg.folio.metadata.inventory.storage.type=okapi"
+    },
+    {
+     "id": "mod-inventory-storage-31.0.0-SNAPSHOT.3006",
+     "name": "mod-inventory-storage",
+     "description": "Inventory Storage Module",
+     "provides": [
+      "item-storage-dereferenced 1.2",
+      "item-storage 11.2",
+      "instance-date-types 1.0",
+      "item-storage-batch-sync 2.0",
+      "item-storage-batch-sync-unsafe 2.0",
+      "holdings-storage 8.2",
+      "holdings-storage-batch-sync 2.0",
+      "holdings-storage-batch-sync-unsafe 2.0",
+      "instance-storage 11.5",
+      "instance-preceding-succeeding-titles 0.2",
+      "instance-storage-batch-sync 3.1",
+      "instance-storage-batch-sync-unsafe 3.1",
+      "instance-storage-bulk 1.1",
+      "loan-types 2.4",
+      "material-types 2.2",
+      "location-units 2.1",
+      "locations 3.2",
+      "instance-relationship-types 1.0",
+      "identifier-types 1.2",
+      "subject-types 1.0",
+      "subject-sources 1.0",
+      "contributor-types 2.0",
+      "contributor-name-types 1.3",
+      "inventory-record-bulk 1.1",
+      "inventory-reindex-records 1.1",
+      "instance-formats 2.0",
+      "instance-types 2.0",
+      "nature-of-content-terms 1.0",
+      "classification-types 1.2",
+      "alternative-title-types 1.0",
+      "modes-of-issuance 1.1",
+      "instance-statuses 1.0",
+      "electronic-access-relationships 1.1",
+      "statistical-code-types 1.0",
+      "statistical-codes 1.0",
+      "ill-policies 1.0",
+      "holdings-types 1.0",
+      "call-number-types 1.0",
+      "instance-note-types 1.0",
+      "holdings-note-types 1.0",
+      "item-note-types 1.0",
+      "item-damaged-statuses 1.0",
+      "service-points 3.5",
+      "service-points-users 1.0",
+      "hrid-settings-storage 1.3",
+      "holdings-sources 1.0",
+      "bound-with-parts-storage 2.0",
+      "inventory-hierarchy 0.8",
+      "inventory-view 3.2",
+      "inventory-view-instance-set 3.2",
+      "instance-reindex 0.1",
+      "instance-iteration 1.0",
+      "async-migration 1.0",
+      "inventory-settings 1.0",
+      "instance-custom-links 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_jsonSchemas"
+     ],
+     "endpoints": 245,
+     "requires": [
+      "user-tenants"
+     ],
+     "optional": [
+      "consortia"
+     ],
+     "permission_sets": 246,
+     "memory_mb": 682,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-inventory-update-5.2.3-SNAPSHOT.2291",
+     "name": "mod-inventory-update",
+     "description": "Inventory Update Module",
+     "provides": [
+      "inventory-upsert-hrid 3.0",
+      "inventory-batch-upsert-hrid 3.0",
+      "shared-inventory-upsert-matchkey 3.0",
+      "shared-inventory-batch-upsert-matchkey 3.0",
+      "inventory-import 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 51,
+     "requires": [
+      "instance-storage",
+      "holdings-storage",
+      "item-storage",
+      "instance-storage-batch-sync",
+      "holdings-storage-batch-sync",
+      "item-storage-batch-sync",
+      "instance-preceding-succeeding-titles",
+      "inventory-view-instance-set",
+      "locations"
+     ],
+     "optional": [
+      "orders-storage.po-lines",
+      "settings",
+      "configuration"
+     ],
+     "permission_sets": 56,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_inventory-14.1.1099000000002229",
+    "folio_inventory-import-4.1.2099000000000290",
+    "folio_plugin-create-inventory-records-7.0.1099000000000165",
+    "folio_plugin-find-instance-10.0.1099000000000208",
+    "folio_stripes-inventory-components-2.1.1099000000000047"
+   ]
+  },
+  {
+   "name": "app-licenses",
+   "version": "1.1.0-SNAPSHOT.100200000010972",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO Licenses application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-licenses-6.4.0-SNAPSHOT.333",
+     "name": "mod-licenses",
+     "description": "mod-licenses",
+     "provides": [
+      "licenses 6.4",
+      "dashboard 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 56,
+     "requires": [],
+     "optional": [
+      "erm",
+      "organizations.organizations"
+     ],
+     "permission_sets": 75,
+     "memory_mb": 768,
+     "uses_kafka": false,
+     "db_pool": "50",
+     "java_options": "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=50.0 -XX:+PrintFlagsFinal"
+    }
+   ],
+   "ui_modules": [
+    "folio_licenses-12.2.1099000000000397",
+    "folio_plugin-find-license-12.2.1099000000000166"
+   ]
+  },
+  {
+   "name": "app-linked-data",
+   "version": "2.1.0-SNAPSHOT.100200000012602",
+   "kind": "optional",
+   "description": "Linked Data application installation",
+   "dependencies": [
+    "app-platform-complete",
+    "app-search",
+    "app-marc-storage",
+    "app-authority-records"
+   ],
+   "modules": [
+    {
+     "id": "mod-linked-data-3.0.0-SNAPSHOT.2625",
+     "name": "mod-linked-data",
+     "description": "Linked Data Module",
+     "provides": [
+      "linked-data 2.0",
+      "linked-data-vocabularies 1.0",
+      "linked-data-profile 1.0",
+      "linked-data-batch-job 1.0",
+      "linked-data-admin 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 35,
+     "requires": [
+      "source-storage-records",
+      "specification-storage",
+      "search-inventory",
+      "search-authorities",
+      "settings",
+      "authority-source-files",
+      "base-url"
+     ],
+     "optional": [],
+     "permission_sets": 35,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=85.0 -Xss4m"
+    },
+    {
+     "id": "mod-linked-data-import-2.0.0-SNAPSHOT.2141",
+     "name": "mod-linked-data-import",
+     "description": "Linked Data Import Module",
+     "provides": [
+      "linked-data-import 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 5,
+     "requires": [
+      "linked-data"
+     ],
+     "optional": [],
+     "permission_sets": 5,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "100",
+     "java_options": "-XX:MaxRAMPercentage=85.0 -Xss4m"
+    }
+   ],
+   "ui_modules": [
+    "folio_ld-folio-wrapper-2.0.6099000000000525"
+   ]
+  },
+  {
+   "name": "app-lists",
+   "version": "1.2.0-SNAPSHOT.100200000012481",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO Lists application",
+   "dependencies": [
+    "app-fqm"
+   ],
+   "modules": [
+    {
+     "id": "mod-lists-4.0.2-SNAPSHOT.2365",
+     "name": "mod-lists",
+     "description": "Lists",
+     "provides": [
+      "lists 2.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 16,
+     "requires": [
+      "entity-types",
+      "fqm-query",
+      "login",
+      "permissions",
+      "users"
+     ],
+     "optional": [],
+     "permission_sets": 16,
+     "memory_mb": 3072,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+    }
+   ],
+   "ui_modules": [
+    "folio_lists-5.0.2099000000001139"
+   ]
+  },
+  {
+   "name": "app-marc-migrations",
+   "version": "3.1.0-SNAPSHOT.100200000011799",
+   "kind": "optional",
+   "description": "MARC Migrations Application",
+   "dependencies": [
+    "app-platform-minimal",
+    "app-marc-storage",
+    "app-authority-records",
+    "app-inventory",
+    "app-data-import"
+   ],
+   "modules": [
+    {
+     "id": "mod-marc-migrations-3.1.0-SNAPSHOT.2209",
+     "name": "mod-marc-migrations",
+     "description": "MARC Migrations",
+     "provides": [
+      "marc-migrations 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 9,
+     "requires": [
+      "authority-storage",
+      "instance-storage",
+      "source-storage-records",
+      "mapping-metadata-provider",
+      "instance-storage-bulk"
+     ],
+     "optional": [],
+     "permission_sets": 10,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": "10",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-marc-storage",
+   "version": "1.1.0-SNAPSHOT.100200000010852",
+   "kind": "optional",
+   "description": "MARC Storage Application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-record-specifications-3.1.0-SNAPSHOT.2228",
+     "name": "mod-record-specifications",
+     "description": "Record Specifications",
+     "provides": [
+      "specification-storage 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 20,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 21,
+     "memory_mb": 517,
+     "uses_kafka": true,
+     "db_pool": "10",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    },
+    {
+     "id": "mod-source-record-storage-6.1.0-SNAPSHOT.2278",
+     "name": "mod-source-record-storage",
+     "description": "Source Record Storage Module",
+     "provides": [
+      "source-storage-snapshots 2.1",
+      "source-storage-records 3.4",
+      "source-storage-source-records 3.3",
+      "source-storage-test-records 2.1",
+      "source-storage-stream 1.2",
+      "source-storage-batch 1.3",
+      "source-storage-async-migrations 1.1"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 27,
+     "requires": [],
+     "optional": [
+      "mapping-metadata-provider",
+      "data-import-converter-storage",
+      "instance-authority-links",
+      "instance-authority-linking-rules"
+     ],
+     "permission_sets": 28,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "15",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-mosaic",
+   "version": "1.2.0-SNAPSHOT.100200000012118",
+   "kind": "optional",
+   "description": "Application Descriptor Repository for the FOLIO Mosaic integration",
+   "dependencies": [
+    "app-acquisitions"
+   ],
+   "modules": [
+    {
+     "id": "mod-mosaic-2.0.0-SNAPSHOT.2083",
+     "name": "mod-mosaic",
+     "description": "Folio mod-mosaic module",
+     "provides": [
+      "mosaic 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 5,
+     "requires": [
+      "orders",
+      "order-templates",
+      "organizations.organizations"
+     ],
+     "optional": [],
+     "permission_sets": 7,
+     "memory_mb": 479,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=75.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_mosaic-settings-1.2.1099000000000159"
+   ]
+  },
+  {
+   "name": "app-notification",
+   "version": "1.1.0-SNAPSHOT.100200000007827",
+   "kind": "optional",
+   "description": "Notification Application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-batch-print-1.4.1-SNAPSHOT.2027",
+     "name": "mod-batch-print",
+     "description": "Batch printing",
+     "provides": [
+      "batch-print 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 7,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 10,
+     "memory_mb": 2048,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-email-1.21.0-SNAPSHOT.2061",
+     "name": "mod-email",
+     "description": "email",
+     "provides": [
+      "email 1.2",
+      "delayedTasks 2.0",
+      "smtpConfiguration 0.1",
+      "email.settings 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 13,
+     "requires": [
+      "configuration"
+     ],
+     "optional": [],
+     "permission_sets": 16,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-event-config-2.11.0-SNAPSHOT.2027",
+     "name": "mod-event-config",
+     "description": "mod-event-config",
+     "provides": [
+      "mod-event 2.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 5,
+     "requires": [],
+     "optional": [],
+     "permission_sets": 6,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-notify-3.6.0-SNAPSHOT.2039",
+     "name": "mod-notify",
+     "description": "Notify",
+     "provides": [
+      "notify 2.2",
+      "patron-notice 1.2"
+     ],
+     "system_interfaces": [
+      "_jsonSchemas",
+      "_ramls",
+      "_tenant"
+     ],
+     "endpoints": 9,
+     "requires": [
+      "users",
+      "mod-event",
+      "template-engine",
+      "message-delivery"
+     ],
+     "optional": [],
+     "permission_sets": 10,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-sender-1.16.0-SNAPSHOT.2031",
+     "name": "mod-sender",
+     "description": "Mod sender",
+     "provides": [
+      "message-delivery 1.1"
+     ],
+     "system_interfaces": [],
+     "endpoints": 1,
+     "requires": [
+      "users",
+      "email",
+      "batch-print"
+     ],
+     "optional": [
+      "text-notify"
+     ],
+     "permission_sets": 1,
+     "memory_mb": 512,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-template-engine-1.24.0-SNAPSHOT.2061",
+     "name": "mod-template-engine",
+     "description": "Template engine module",
+     "provides": [
+      "template-engine 2.3"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 7,
+     "requires": [
+      "locale"
+     ],
+     "optional": [
+      "patron-notice-policy-storage"
+     ],
+     "permission_sets": 8,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-oa",
+   "version": "1.0.0-SNAPSHOT.100200000010911",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO OA application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-oa-3.4.0-SNAPSHOT.213",
+     "name": "mod-oa",
+     "description": "mod-oa",
+     "provides": [
+      "oa 2.4"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 48,
+     "requires": [],
+     "optional": [
+      "erm"
+     ],
+     "permission_sets": 73,
+     "memory_mb": 1024,
+     "uses_kafka": false,
+     "db_pool": "50",
+     "java_options": "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+    }
+   ],
+   "ui_modules": [
+    "folio_oa-3.2.1099000000000320"
+   ]
+  },
+  {
+   "name": "app-oai-pmh",
+   "version": "2.1.0-SNAPSHOT.100200000011982",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO OAI-PMH application",
+   "dependencies": [
+    "app-platform-minimal",
+    "app-marc-storage",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "edge-oai-pmh-2.13.0-SNAPSHOT.2015",
+     "name": "edge-oai-pmh",
+     "description": "OAI-PMH Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "oai-pmh",
+      "login"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Drequest_timeout_ms=7200000"
+    },
+    {
+     "id": "mod-oai-pmh-3.17.0-SNAPSHOT.2209",
+     "name": "mod-oai-pmh",
+     "description": "OAI-PMH Repository Module",
+     "provides": [
+      "oai-pmh 3.5"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 20,
+     "requires": [
+      "instance-storage",
+      "inventory-hierarchy",
+      "source-storage-records",
+      "source-storage-source-records",
+      "configuration",
+      "alternative-title-types",
+      "contributor-name-types",
+      "electronic-access-relationships",
+      "instance-types",
+      "identifier-types",
+      "modes-of-issuance",
+      "holdings-note-types",
+      "item-note-types",
+      "nature-of-content-terms",
+      "locations",
+      "loan-types",
+      "location-units",
+      "material-types",
+      "instance-formats",
+      "call-number-types",
+      "user-tenants"
+     ],
+     "optional": [],
+     "permission_sets": 22,
+     "memory_mb": 575,
+     "uses_kafka": false,
+     "db_pool": "20",
+     "java_options": "-XX:MaxRAMPercentage=66.0 -Dfile.encoding=UTF-8"
+    }
+   ],
+   "ui_modules": [
+    "folio_oai-pmh-7.0.1099000000000206"
+   ]
+  },
+  {
+   "name": "app-quick-marc",
+   "version": "1.1.0-SNAPSHOT.100200000006829",
+   "kind": "optional",
+   "description": "Quick MARC Application",
+   "dependencies": [
+    "app-marc-storage",
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-quick-marc-8.1.0-SNAPSHOT.2316",
+     "name": "mod-quick-marc",
+     "description": "quickMARC",
+     "provides": [
+      "marc-records-editor 7.0",
+      "marc-specifications 1.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 6,
+     "requires": [
+      "source-storage-snapshots",
+      "source-storage-records",
+      "specification-storage",
+      "users",
+      "user-tenants"
+     ],
+     "optional": [
+      "field-protection-settings",
+      "instance-authority-links",
+      "instance-authority-linking-rules",
+      "instance-authority-links-suggestions",
+      "instance-preceding-succeeding-titles",
+      "mapping-metadata-provider",
+      "authority-storage",
+      "instance-storage",
+      "holdings-storage",
+      "authorities-config"
+     ],
+     "permission_sets": 7,
+     "memory_mb": 512,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_quick-marc-11.1.1099000000000631",
+    "folio_stripes-marc-components-2.1.1099000000000244"
+   ]
+  },
+  {
+   "name": "app-reading-room",
+   "version": "3.1.0-SNAPSHOT.100200000010933",
+   "kind": "optional",
+   "description": "Application for Reading Room installation",
+   "dependencies": [
+    "app-platform-complete",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "mod-reading-room-2.1.0-SNAPSHOT.2101",
+     "name": "mod-reading-room",
+     "description": "Manage reading room and its related access",
+     "provides": [
+      "reading-room 1.0",
+      "reading-room-patron-permission 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 8,
+     "requires": [
+      "service-points",
+      "users"
+     ],
+     "optional": [],
+     "permission_sets": 8,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": [
+    "folio_reading-room-3.0.1099000000000195"
+   ]
+  },
+  {
+   "name": "app-reporting",
+   "version": "1.6.0-SNAPSHOT.100200000011333",
+   "kind": "optional",
+   "description": "Reporting app for FOLIO Sunflower",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-reporting-1.7.0-SNAPSHOT.182",
+     "name": "mod-reporting",
+     "description": "reporting module",
+     "provides": [
+      "ldp-query 1.4"
+     ],
+     "system_interfaces": [],
+     "endpoints": 10,
+     "requires": [
+      "settings"
+     ],
+     "optional": [],
+     "permission_sets": 12,
+     "memory_mb": 95,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": null
+    }
+   ],
+   "ui_modules": [
+    "folio_ldp-3.3.1099000000000352"
+   ]
+  },
+  {
+   "name": "app-requests-ecs",
+   "version": "2.1.0-SNAPSHOT.100200000011727",
+   "kind": "optional",
+   "description": "Application for the ECS Requests installation",
+   "dependencies": [
+    "app-platform-complete",
+    "app-dcb",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "mod-circulation-bff-1.3.0-SNAPSHOT.2122",
+     "name": "mod-circulation-bff",
+     "description": "Folio mod-circulation-bff module",
+     "provides": [
+      "circulation-bff-ecs-request-external 1.1",
+      "circulation-bff-pick-slips 1.0",
+      "circulation-bff-search-slips 1.0",
+      "circulation-bff-users 1.0",
+      "circulation-bff-requests 1.4",
+      "circulation-bff-requests-batch 1.1",
+      "circulation-bff-loans 1.6",
+      "circulation-bff-inventory 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 22,
+     "requires": [
+      "pick-slips",
+      "search-slips",
+      "search-inventory",
+      "consortium-search",
+      "user-tenants",
+      "users",
+      "user-tenants",
+      "login",
+      "permissions",
+      "item-storage",
+      "holdings-storage",
+      "locations",
+      "location-units",
+      "service-points",
+      "material-types",
+      "loan-types",
+      "circulation",
+      "circulation-settings",
+      "instance-storage",
+      "loan-storage",
+      "circulation-item",
+      "inventory",
+      "declare-item-lost",
+      "claim-item-returned"
+     ],
+     "optional": [
+      "tlr-staff-slips",
+      "tlr-settings",
+      "requests-mediated",
+      "ecs-request-external",
+      "requests-mediated-actions",
+      "requests-mediated-loans",
+      "ecs-tlr-allowed-service-points",
+      "ecs-tlr",
+      "allowed-service-points",
+      "ecs-loans",
+      "requests-mediated-batch"
+     ],
+     "permission_sets": 21,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-tlr-1.3.0-SNAPSHOT.2124",
+     "name": "mod-tlr",
+     "description": "Folio mod-tlr module",
+     "provides": [
+      "ecs-tlr 1.0",
+      "ecs-request-external 1.0",
+      "ecs-tlr-allowed-service-points 1.1",
+      "tlr-settings 1.0",
+      "tlr-staff-slips 1.0",
+      "ecs-loans 1.3"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 14,
+     "requires": [
+      "users",
+      "user-tenants",
+      "login",
+      "permissions",
+      "circulation",
+      "declare-item-lost",
+      "claim-item-returned",
+      "loan-policy-storage",
+      "loan-storage",
+      "circulation-item",
+      "holdings-storage",
+      "instance-storage",
+      "item-storage",
+      "loan-types",
+      "location-units",
+      "locations",
+      "material-types",
+      "request-storage",
+      "search-inventory",
+      "consortium-search",
+      "allowed-service-points",
+      "service-points",
+      "cancellation-reason-storage",
+      "ecs-request-transactions",
+      "transactions"
+     ],
+     "optional": [
+      "consortia"
+     ],
+     "permission_sets": 16,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-requests-mediated",
+   "version": "3.1.0-SNAPSHOT.100200000012193",
+   "kind": "optional",
+   "description": "Application for the Mediated Requests installation",
+   "dependencies": [
+    "app-platform-complete",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "mod-requests-mediated-1.4.0-SNAPSHOT.2190",
+     "name": "mod-requests-mediated",
+     "description": "Folio mod-requests-mediated module",
+     "provides": [
+      "requests-mediated 2.0",
+      "requests-mediated-actions 1.2",
+      "requests-mediated-loans 1.4",
+      "requests-mediated-batch 1.0"
+     ],
+     "system_interfaces": [
+      "_timer",
+      "_tenant"
+     ],
+     "endpoints": 19,
+     "requires": [
+      "users",
+      "login",
+      "permissions",
+      "item-storage",
+      "instance-storage",
+      "holdings-storage",
+      "circulation",
+      "allowed-service-points",
+      "declare-item-lost",
+      "claim-item-returned",
+      "location-units",
+      "locations",
+      "service-points",
+      "loan-storage",
+      "loan-policy-storage",
+      "loan-types",
+      "material-types",
+      "search-inventory",
+      "consortium-search",
+      "user-tenants",
+      "request-storage",
+      "settings"
+     ],
+     "optional": [
+      "ecs-tlr",
+      "ecs-request-external",
+      "ecs-loans"
+     ],
+     "permission_sets": 22,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-requests-mediated-ui",
+   "version": "2.1.0-SNAPSHOT.100200000007941",
+   "kind": "optional",
+   "description": "Application for the Mediated Requests installation (UI part)",
+   "dependencies": [
+    "app-requests-mediated",
+    "app-requests-ecs"
+   ],
+   "modules": [],
+   "ui_modules": [
+    "folio_requests-mediated-4.1.1099000000000251"
+   ]
+  },
+  {
+   "name": "app-rtac",
+   "version": "1.2.0-SNAPSHOT.100200000012214",
+   "kind": "optional",
+   "description": "Application Descriptor Repository for the FOLIO RTAC application",
+   "dependencies": [
+    "app-acquisitions",
+    "app-inventory"
+   ],
+   "modules": [
+    {
+     "id": "edge-rtac-3.2.0-SNAPSHOT.2066",
+     "name": "edge-rtac",
+     "description": "Real Time Availability Check Edge API",
+     "provides": [],
+     "system_interfaces": [],
+     "endpoints": 0,
+     "requires": [
+      "rtac-batch",
+      "login"
+     ],
+     "optional": [],
+     "permission_sets": 0,
+     "memory_mb": 256,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    },
+    {
+     "id": "mod-rtac-3.10.0-SNAPSHOT.2054",
+     "name": "mod-rtac",
+     "description": "Real Time Availability Check Module",
+     "provides": [
+      "rtac 1.5",
+      "rtac-batch 1.2"
+     ],
+     "system_interfaces": [],
+     "endpoints": 2,
+     "requires": [
+      "inventory-hierarchy",
+      "loan-storage",
+      "circulation",
+      "pieces",
+      "user-tenants",
+      "search-facets",
+      "settings"
+     ],
+     "optional": [],
+     "permission_sets": 5,
+     "memory_mb": 341,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-XX:MaxRAMPercentage=66.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-search",
+   "version": "1.1.0-SNAPSHOT.100200000012392",
+   "kind": "optional",
+   "description": "Search Application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-search-6.1.0-SNAPSHOT.2840",
+     "name": "mod-search",
+     "description": "Search Module",
+     "provides": [
+      "indices 1.2",
+      "search-inventory 1.1",
+      "search-authorities 1.0",
+      "search-linked-data 1.1",
+      "search-facets 1.0",
+      "consortium-search 2.1",
+      "resource-ids-streaming 1.0",
+      "browse-inventory 1.0",
+      "browse-authorities 1.0",
+      "browse-config 1.0",
+      "search-config 0.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 44,
+     "requires": [],
+     "optional": [
+      "user-tenants",
+      "consortia",
+      "inventory-reindex-records",
+      "locations",
+      "location-units",
+      "instance-storage",
+      "holdings-storage",
+      "item-storage",
+      "authority-identifier-types",
+      "authority-reindex",
+      "alternative-title-types",
+      "identifier-types",
+      "call-number-types",
+      "classification-types"
+     ],
+     "permission_sets": 45,
+     "memory_mb": 1024,
+     "uses_kafka": true,
+     "db_pool": "5",
+     "java_options": "-XX:MaxRAMPercentage=85.0"
+    }
+   ],
+   "ui_modules": []
+  },
+  {
+   "name": "app-service-interaction",
+   "version": "1.1.0-SNAPSHOT.100200000010785",
+   "kind": "optional",
+   "description": "Application descriptor for the FOLIO Agreements application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-service-interaction-4.4.0-SNAPSHOT.168",
+     "name": "mod-service-interaction",
+     "description": "mod-service-interaction",
+     "provides": [
+      "servint 4.4",
+      "dashboard 1.0"
+     ],
+     "system_interfaces": [
+      "_tenant",
+      "_timer"
+     ],
+     "endpoints": 44,
+     "requires": [
+      "okapi"
+     ],
+     "optional": [
+      "dashboard"
+     ],
+     "permission_sets": 63,
+     "memory_mb": 1024,
+     "uses_kafka": false,
+     "db_pool": null,
+     "java_options": "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+    }
+   ],
+   "ui_modules": [
+    "folio_service-interaction-4.2.1099000000000399"
+   ]
+  },
+  {
+   "name": "app-serials-management",
+   "version": "1.1.0-SNAPSHOT.100200000010992",
+   "kind": "optional",
+   "description": "Application Descriptor Repository for the FOLIO Serials Management application",
+   "dependencies": [
+    "app-platform-minimal"
+   ],
+   "modules": [
+    {
+     "id": "mod-serials-management-2.2.0-SNAPSHOT.202",
+     "name": "mod-serials-management",
+     "description": "mod-serials-management",
+     "provides": [
+      "serials-management 2.2"
+     ],
+     "system_interfaces": [
+      "_tenant"
+     ],
+     "endpoints": 32,
+     "requires": [],
+     "optional": [
+      "order-lines"
+     ],
+     "permission_sets": 53,
+     "memory_mb": 1024,
+     "uses_kafka": false,
+     "db_pool": "50",
+     "java_options": "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+    }
+   ],
+   "ui_modules": [
+    "folio_serials-management-2.2.1099000000001176"
+   ]
+  }
+ ]
+}

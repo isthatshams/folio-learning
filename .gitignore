@@ -3,3 +3,4 @@ eureka-setup/
 # Local install logs
 *.log
 .DS_Store
+docs/tools/.cache/
